@@ -1,0 +1,2 @@
+rootProject.name='family-map-client'
+include ':app'
