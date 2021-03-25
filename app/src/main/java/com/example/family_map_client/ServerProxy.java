@@ -28,12 +28,17 @@ public class ServerProxy {
         this.serverPortNumber = serverPortNumber;
     }
 
-    public LoginResult login(LoginRequest request) {
+    public ServerProxy() {
+
+    }
+
+    public LoginResult login(URL url, LoginRequest request) {
         // Serialize request as JSON string
         // Make HTTP request to server in order to call the web api
         // Deserialize response body to LoginResult object
         try {
-            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/login");
+
+//            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/login");
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
 
             http.setRequestMethod("POST");
