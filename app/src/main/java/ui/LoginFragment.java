@@ -92,6 +92,14 @@ public class LoginFragment extends Fragment {
         // Form contents
 
         serverHost = (EditText) v.findViewById(R.id.ServerHost);
+        serverPort = (EditText) v.findViewById(R.id.ServerPort);
+        username = (EditText) v.findViewById(R.id.UserName);
+        password = (EditText) v.findViewById(R.id.Password);
+        firstName = (EditText) v.findViewById(R.id.FirstName);
+        lastName = (EditText) v.findViewById(R.id.LastName);
+        email = (EditText) v.findViewById(R.id.Email);
+        maleButton = (RadioButton) v.findViewById(R.id.MaleButton);
+        femaleButton = (RadioButton) v.findViewById(R.id.FemaleButton);
 
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -111,7 +119,12 @@ public class LoginFragment extends Fragment {
         };
 
         serverHost.addTextChangedListener(textWatcher);
-
+        serverPort.addTextChangedListener(textWatcher);
+        username.addTextChangedListener(textWatcher);
+        password.addTextChangedListener(textWatcher);
+        firstName.addTextChangedListener(textWatcher);
+        lastName.addTextChangedListener(textWatcher);
+        email.addTextChangedListener(textWatcher);
 
         return v;
     }
