@@ -80,12 +80,12 @@ public class ServerProxy {
         return loginResult;
     }
 
-    public RegisterResult register(RegisterRequest request){
+    public RegisterResult register(URL url, RegisterRequest request){
         // Serialize request as JSON string
         // Make HTTP request to server in order to call the web api
         // Deserialize response body to LoginResult object
         try {
-            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/register");
+//            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/register");
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
 
             http.setRequestMethod("POST");
