@@ -13,8 +13,10 @@ public class LoginFragment extends Fragment {
     public static LoginFragment newInstance(String title) {
         LoginFragment fragment = new LoginFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_TITLE, title);
+//        args.putString(ARG_TITLE, title);
         fragment.setArguments(args);
         return fragment;
     }
+
+
 }
