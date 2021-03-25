@@ -111,7 +111,7 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                enableButton();
             }
 
             @Override
@@ -139,5 +139,19 @@ public class LoginFragment extends Fragment {
     private void onLoginClick() {
         LoginTask task = new LoginTask(this, thisContext);
         task.execute(loginRequest);
+    }
+
+    private void enableButton() {
+        if (serverHost.length() > 0 && serverPort.length() > 0 && username.length() > 0 && password.length() > 0) {
+            loginButton.setEnabled(true);
+        } else {
+            loginButton.setEnabled(false);
+        }
+
+        if (serverHost.length() > 0 && serverPort.length() > 0 && username.length() > 0 && password.length() > 0 && firstName.length() > 0 && lastName.length() > 0 && email.length() > 0) {
+            registerButton.setEnabled(true);
+        } else {
+            registerButton.setEnabled(false);
+        }
     }
 }

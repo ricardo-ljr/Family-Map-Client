@@ -47,7 +47,7 @@ public class RegisterTask extends AsyncTask<RegisterRequest, Void, RegisterResul
         if (res.isSuccess()) {
             Toast.makeText(context, "Register Successfully", Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(context, "Register Faile", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Register Failed", Toast.LENGTH_LONG).show();
         }
     }
 }
