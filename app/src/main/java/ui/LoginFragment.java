@@ -16,6 +16,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.family_map_client.R;
 
+import AsyncTasks.LoginTask;
+import AsyncTasks.RegisterTask;
 import Request.LoginRequest;
 import Request.RegisterRequest;
 
@@ -130,10 +132,12 @@ public class LoginFragment extends Fragment {
     }
 
     private void onRegisterClick() {
-
+        RegisterTask task = new RegisterTask(this, thisContext);
+        task.execute(registerRequest);
     }
 
     private void onLoginClick() {
-
+        LoginTask task = new LoginTask(this, thisContext);
+        task.execute(loginRequest);
     }
 }
