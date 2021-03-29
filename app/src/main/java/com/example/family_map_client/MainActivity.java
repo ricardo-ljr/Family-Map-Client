@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
             login = LoginFragment.newInstance(this);
             fm.beginTransaction().add(R.id.mainContainer, login).commit();
         }
-
     }
 
 

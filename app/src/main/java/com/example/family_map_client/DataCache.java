@@ -15,10 +15,15 @@ import Model.Person;
  */
 public class DataCache {
 
-    private static DataCache _instance = new DataCache();
+    private static DataCache instance;
 
     public static DataCache getInstance() {
-        return _instance;
+
+        if (instance == null) {
+            instance = new DataCache();
+        }
+
+        return instance;
     }
 
     private Map<String, Person> people;
@@ -41,5 +46,53 @@ public class DataCache {
         maternalAncestors = new HashSet<>();
     }
 
+    private String authtoken;
+    private String personID;
+    private String serverHost;
+    private String serverPort;
+    private boolean success;
 
+    public String getAuthtoken() {
+        return authtoken;
+    }
+
+    public void setAuthtoken(String authtoken) {
+        this.authtoken = authtoken;
+    }
+
+    public String getPersonID() {
+        return personID;
+    }
+
+    public void setPersonID(String personID) {
+        this.personID = personID;
+    }
+
+    public String getServerPort() {
+        return serverPort;
+    }
+
+    public void setServerPort(String serverPort) {
+        this.serverPort = serverPort;
+    }
+
+    public void setServerHost(String serverHost) {
+        this.serverHost = serverHost;
+    }
+
+    public String getServerHost(String serverHost) {
+        return serverHost;
+    }
+
+    public boolean isSuccess() {
+        return success;
+    }
+
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public String getServerHost() {
+        return serverHost;
+    }
 }

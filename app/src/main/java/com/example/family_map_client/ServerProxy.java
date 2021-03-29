@@ -2,6 +2,8 @@ package com.example.family_map_client;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -23,11 +25,6 @@ public class ServerProxy {
     public static String serverHostName;
     public static int serverPortNumber;
 
-    public ServerProxy (String serverHostName, int serverPortNumber) {
-        this.serverHostName = serverHostName;
-        this.serverPortNumber = serverPortNumber;
-    }
-
     public ServerProxy() {
 
     }
@@ -36,9 +33,9 @@ public class ServerProxy {
         // Serialize request as JSON string
         // Make HTTP request to server in order to call the web api
         // Deserialize response body to LoginResult object
+        LoginResult loginResult = new LoginResult();
         try {
 
-//            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/login");
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
 
             http.setRequestMethod("POST");
@@ -50,17 +47,17 @@ public class ServerProxy {
 
             // Serializing request as JSON string
             String jsonString = Serializer.serialize(request);
-            OutputStream out = http.getOutputStream();
-            ReadWrite.writeString(jsonString, out);
-            out.close();
+
+            OutputStream reqBody = http.getOutputStream();
+            ReadWrite.writeString(jsonString, reqBody);
 
             if(http.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
-                InputStream reqBody = http.getInputStream(); // parse JSON data out of the response body
+                InputStream resBody = http.getInputStream(); // parse JSON data out of the response body
 
-                String reqData = ReadWrite.readString(reqBody);
+                String resData = ReadWrite.readString(resBody);
 
-                LoginResult loginResult = Deserializer.deserialize(reqData, LoginResult.class);
+                loginResult = Deserializer.deserialize(resData, LoginResult.class);
 
                 http.getInputStream().close();
 
@@ -70,8 +67,6 @@ public class ServerProxy {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        LoginResult loginResult = new LoginResult();
 
         loginResult.setSuccess(false);
 
@@ -84,8 +79,11 @@ public class ServerProxy {
         // Serialize request as JSON string
         // Make HTTP request to server in order to call the web api
         // Deserialize response body to LoginResult object
+
+        RegisterResult registerResult = new RegisterResult();
+
         try {
-//            URL url = new URL("http://" + serverHostName + ":" + serverPortNumber + "/user/register");
+
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
 
             http.setRequestMethod("POST");
@@ -96,29 +94,33 @@ public class ServerProxy {
             http.connect();
 
             // Serializing request as JSON string
+            // String jsonString = Serializer.serialize(request);
+
             String jsonString = Serializer.serialize(request);
-            OutputStream out = http.getOutputStream();
-            ReadWrite.writeString(jsonString, out);
-            out.close();
+
+            OutputStream reqBody = http.getOutputStream();
+
+            ReadWrite.writeString(jsonString, reqBody);
 
             if(http.getResponseCode() == HttpURLConnection.HTTP_OK) {
 
-                InputStream reqBody = http.getInputStream(); // parse JSON data out of the response body
+                InputStream resBody = http.getInputStream(); // parse JSON data out of the response body
 
-                String reqData = ReadWrite.readString(reqBody);
+                String reqData = ReadWrite.readString(resBody);
 
-                RegisterResult registerResult = Deserializer.deserialize(reqData, RegisterResult.class);
+                registerResult = Deserializer.deserialize(reqData, RegisterResult.class);
 
                 http.getInputStream().close();
 
                 return registerResult;
+            } else {
+                System.out.println("Error in register proxy");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        RegisterResult registerResult = new RegisterResult();
 
         registerResult.setSuccess(false);
 
