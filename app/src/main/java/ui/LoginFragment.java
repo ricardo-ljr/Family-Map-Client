@@ -18,6 +18,7 @@ import com.example.family_map_client.DataCache;
 import com.example.family_map_client.MainActivity;
 import com.example.family_map_client.R;
 
+import AsyncTasks.FamilyData;
 import AsyncTasks.LoginTask;
 import AsyncTasks.RegisterTask;
 import Request.LoginRequest;
@@ -182,10 +183,14 @@ public class LoginFragment extends Fragment {
         data.setServerHost(serverHost.getText().toString());
 
         //Login Request
+        data.setFirstName(firstName.getText().toString());
+        data.setLastName(lastName.getText().toString());
         loginRequest.setUserName(username.getText().toString());
         loginRequest.setPassword(password.getText().toString());
         LoginTask task = new LoginTask(this, thisContext);
         task.execute(loginRequest);
+
+
     }
 
     private void enableButton() {

@@ -17,6 +17,8 @@ public class DataCache {
 
     private static DataCache instance;
 
+    private Person user;
+
     public static DataCache getInstance() {
 
         if (instance == null) {
@@ -38,18 +40,20 @@ public class DataCache {
      * Private constructor to store person and event data that comes back from server
      */
     private DataCache() {
-        people = new HashMap<>();
-        events = new HashMap<>();
-        personEvents = new HashMap<>();
-        eventTypes = new ArrayList<>();
-        paternalAncestors = new HashSet<>();
-        maternalAncestors = new HashSet<>();
+        this.people = new HashMap<>();
+        this.events = new HashMap<>();
+        this.personEvents = new HashMap<>();
+        this.eventTypes = new ArrayList<>();
+        this.paternalAncestors = new HashSet<>();
+        this.maternalAncestors = new HashSet<>();
     }
 
     private String authtoken;
     private String personID;
     private String serverHost;
     private String serverPort;
+    private String firstName;
+    private String lastName;
     private boolean success;
 
     public String getAuthtoken() {
@@ -95,4 +99,32 @@ public class DataCache {
     public String getServerHost() {
         return serverHost;
     }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public Person getUser() {
+        return user;
+    }
+
+    public void setUser(Person user) {
+        this.user = user;
+    }
+
+
+
 }

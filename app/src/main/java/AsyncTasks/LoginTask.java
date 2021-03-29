@@ -50,12 +50,24 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResult> {
     @Override
     protected void onPostExecute(LoginResult res) {
         DataCache data = DataCache.getInstance();
-        if(res.isSuccess()) {
-            data.setAuthtoken(res.getAuthToken());
-            Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
+
+        try {
+            if (res.isSuccess()) {
+                data.setAuthtoken(res.getAuthToken());
+
+                Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
+            }
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            FamilyData familyDataTask = new FamilyData(fragment, context);
+            familyDataTask.execute(data.getAuthtoken());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
-
 }

@@ -15,6 +15,7 @@ import JSONReader.Serializer;
 import Request.LoginRequest;
 import Request.RegisterRequest;
 import Result.LoginResult;
+import Result.PersonsResult;
 import Result.RegisterResult;
 
 /**
@@ -131,5 +132,52 @@ public class ServerProxy {
     }
 
     // GetAllPeople and user's family tree
+
+    public PersonsResult persons(URL url, String authtoken){
+        // Serialize request as JSON string
+        // Make HTTP request to server in order to call the web api
+        // Deserialize response body to LoginResult object
+
+        PersonsResult personsResult = new PersonsResult();
+
+        try {
+
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+
+            http.setRequestMethod("GET");
+            http.setDoOutput(false); // there is no request body
+            http.addRequestProperty("Accept", "application/json");
+            http.addRequestProperty("Authorization", authtoken);
+
+            http.connect();
+
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                InputStream resBody = http.getInputStream(); // parse JSON data out of the response body
+
+                String reqData = ReadWrite.readString(resBody);
+
+                personsResult = Deserializer.deserialize(reqData, PersonsResult.class);
+
+                http.getInputStream().close();
+
+                return personsResult;
+            } else {
+                System.out.println("Error in register proxy");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        personsResult.setSuccess(false);
+
+        personsResult.setMessage("Error in ServerProxy when retrieving user's person");
+
+        return personsResult;
+
+    }
+
     //GetAllEvents in the family tree
 }

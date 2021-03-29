@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         Fragment login = fm.findFragmentById(R.id.mainContainer);
 
-
         if (login == null) {
             login = LoginFragment.newInstance(this);
             fm.beginTransaction().add(R.id.mainContainer, login).commit();
