@@ -3,12 +3,14 @@ package com.example.family_map_client;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
 import Request.RegisterRequest;
 import Result.RegisterResult;
 import ui.LoginFragment;
+import ui.MapFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,5 +28,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void displayMap() {
+        MapFragment mapFragment = new MapFragment();
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.mainContainer, mapFragment);
+        fragmentTransaction.commit();
+    }
 
 }

@@ -7,6 +7,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.family_map_client.DataCache;
+import com.example.family_map_client.MainActivity;
 import com.example.family_map_client.ServerProxy;
 
 import java.net.MalformedURLException;
@@ -56,6 +57,8 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResult> {
 
             FamilyData familyDataTask = new FamilyData(fragment, context);
             familyDataTask.execute(data.getAuthtoken());
+            MainActivity mainActivity = (MainActivity) context;
+            mainActivity.displayMap();
 
         } else {
             Toast.makeText(context, "Login Failed", Toast.LENGTH_LONG).show();
