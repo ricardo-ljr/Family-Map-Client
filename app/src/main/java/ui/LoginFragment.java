@@ -185,11 +185,11 @@ public class LoginFragment extends Fragment {
         //Login Request
         data.setFirstName(firstName.getText().toString());
         data.setLastName(lastName.getText().toString());
+
         loginRequest.setUserName(username.getText().toString());
         loginRequest.setPassword(password.getText().toString());
         LoginTask task = new LoginTask(this, thisContext);
         task.execute(loginRequest);
-
 
     }
 
