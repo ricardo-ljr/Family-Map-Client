@@ -26,7 +26,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(@NonNull LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
        getActivity().setTitle("Family Map");
-
        return layoutInflater.inflate(R.layout.fragment_map, container, false);
     }
 
