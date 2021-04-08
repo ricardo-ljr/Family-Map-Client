@@ -50,6 +50,8 @@ public class DataCache {
 
 
 
+    /******* Strings for login purposes ********/
+
     private String authtoken;
     private String personID;
     private String serverHost;
@@ -57,6 +59,17 @@ public class DataCache {
     private String firstName;
     private String lastName;
     private boolean success;
+
+    /******* Boolean Variables to check for settings switch ********/
+
+    private boolean isLifeStoryLinesOn = true;
+    private boolean isFamilyTreeLinesOn = true;
+    private boolean isSpouseLinesOn = true;
+    private boolean isFatherSideOn = true;
+    private boolean isMotherSideOn = true;
+    private boolean isMaleEventsOn = true;
+    private boolean isFemaleEventsOn = true;
+
 
 
     public String getAuthtoken() {
@@ -140,6 +153,65 @@ public class DataCache {
         for (int i = 0; i < persons.length; i++) {
             people.put(persons[i].getPersonID(), persons[i]);
         }
+    }
+
+
+    /********* Settings Switch Getter and Setter Found Here *********/
+
+    public boolean isLifeStoryLinesOn() {
+        return isLifeStoryLinesOn;
+    }
+
+    public void setLifeStoryLinesOn(boolean lifeStoryLinesOn) {
+        isLifeStoryLinesOn = lifeStoryLinesOn;
+    }
+
+    public boolean isFamilyTreeLinesOn() {
+        return isFamilyTreeLinesOn;
+    }
+
+    public void setFamilyTreeLinesOn(boolean familyTreeLinesOn) {
+        isFamilyTreeLinesOn = familyTreeLinesOn;
+    }
+
+    public boolean isSpouseLinesOn() {
+        return isSpouseLinesOn;
+    }
+
+    public void setSpouseLinesOn(boolean spouseLinesOn) {
+        isSpouseLinesOn = spouseLinesOn;
+    }
+
+    public boolean isFatherSideOn() {
+        return isFatherSideOn;
+    }
+
+    public void setFatherSideOn(boolean fatherSideOn) {
+        isFatherSideOn = fatherSideOn;
+    }
+
+    public boolean isMotherSideOn() {
+        return isMotherSideOn;
+    }
+
+    public void setMotherSideOn(boolean motherSideOn) {
+        isMotherSideOn = motherSideOn;
+    }
+
+    public boolean isMaleEventsOn() {
+        return isMaleEventsOn;
+    }
+
+    public void setMaleEventsOn(boolean maleEventsOn) {
+        isMaleEventsOn = maleEventsOn;
+    }
+
+    public boolean isFemaleEventsOn() {
+        return isFemaleEventsOn;
+    }
+
+    public void setFemaleEventsOn(boolean femaleEventsOn) {
+        isFemaleEventsOn = femaleEventsOn;
     }
 
 }
