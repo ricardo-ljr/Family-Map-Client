@@ -48,6 +48,8 @@ public class DataCache {
         this.maternalAncestors = new HashSet<>();
     }
 
+
+
     private String authtoken;
     private String personID;
     private String serverHost;
@@ -55,6 +57,7 @@ public class DataCache {
     private String firstName;
     private String lastName;
     private boolean success;
+
 
     public String getAuthtoken() {
         return authtoken;
@@ -126,5 +129,17 @@ public class DataCache {
     }
 
 
+    /**
+     * Storing all persons for logged in user
+     *
+     * @param persons
+     */
+    public void setPeople(Person[] persons) {
+        setUser(persons[0]);
+
+        for (int i = 0; i < persons.length; i++) {
+            people.put(persons[i].getPersonID(), persons[i]);
+        }
+    }
 
 }

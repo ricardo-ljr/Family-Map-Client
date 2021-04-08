@@ -54,6 +54,7 @@ public class FamilyData extends AsyncTask<String, Integer, PersonsResult> {
     protected void onPostExecute(PersonsResult res) {
         DataCache data = DataCache.getInstance();
         if(res.isSuccess()) {
+            data.setPeople(res.getPerson());
             Toast.makeText(context, "People successfully received for " + ((Person) personRes.getPerson()[0]).getFirstName() + " " +((Person) personRes.getPerson()[0]).getLastName() + ".", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, "Retrieving people for " + ((Person) personRes.getPerson()[0]).getFirstName() + " " +((Person) personRes.getPerson()[0]).getLastName() + " failed.", Toast.LENGTH_SHORT).show();
