@@ -1,9 +1,12 @@
 package ui;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.family_map_client.MainActivity;
 import com.example.family_map_client.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,6 +22,13 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
+
+import Activity.SearchActivity;
+import Activity.SettingsActivity;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
@@ -33,11 +44,22 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        Iconify.with(new FontAwesomeModule());
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.main_menu, menu);
+
+        Drawable icon_gear;
+        Drawable search_icon;
+
+        icon_gear = new IconDrawable(getContext(), FontAwesomeIcons.fa_gear).colorRes(R.color.white).sizeDp(25);
+        menu.findItem(R.id.settingsMenuItem).setIcon(icon_gear);
+
+        search_icon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search).colorRes(R.color.white).sizeDp(25);
+        menu.findItem(R.id.searchMenuItem).setIcon(search_icon);
     }
 
     @Override
@@ -49,6 +71,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             mapFragment.getMapAsync(this);
         }
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menu) {
+        super.onOptionsItemSelected(menu);
+        switch(menu.getItemId()) {
+            case R.id.searchMenuItem:
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.settingsMenuItem:
+                ((MainActivity) getActivity()).displaySettings();
+                return true;
+            default:
+                return false;
+        }
+    }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
