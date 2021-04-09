@@ -32,8 +32,14 @@ public class DataCache {
     private Map<String, Event> events; // list of event ID's
     private Map<String, ArrayList<Event>> personEvents; // list of chronologically sorted events
     private List<String> eventTypes;
-    private Set<String> paternalAncestors;
-    private Set<String> maternalAncestors;
+
+    private Map<String, Person> childrenMap;
+    private Set<String> maleSpouse;
+    private Set<String> femaleSpouse;
+    private Set<String> paternalAncestorsMales;
+    private Set<String> paternalAncestorsFemales;
+    private Set<String> maternalAncestorsMales;
+    private Set<String> maternalAncestorsFemales;
     private Map<String, List<Person>> personChildren;
 
     /**
@@ -44,11 +50,14 @@ public class DataCache {
         this.events = new HashMap<>();
         this.personEvents = new HashMap<>();
         this.eventTypes = new ArrayList<>();
-        this.paternalAncestors = new HashSet<>();
-        this.maternalAncestors = new HashSet<>();
+        this.childrenMap = new HashMap<>();
+        this.maleSpouse = new HashSet<>();
+        this.femaleSpouse = new HashSet<>();
+        this.paternalAncestorsMales = new HashSet<>();
+        this.paternalAncestorsFemales = new HashSet<>();
+        this.maternalAncestorsMales = new HashSet<>();
+        this.maternalAncestorsFemales = new HashSet<>();
     }
-
-
 
     /******* Strings for login purposes ********/
 
@@ -174,6 +183,8 @@ public class DataCache {
         for (int i = 0; i < persons.length; i++) {
             people.put(persons[i].getPersonID(), persons[i]);
         }
+
+        setFamilyTree();
     }
 
     /**
@@ -241,7 +252,103 @@ public class DataCache {
         }
     }
 
+    /**
+     * This function sets the family tree for the user in the app
+     *
+     */
+    public void setFamilyTree() {
 
+        //Set Father's Side
+        if(user.getFatherID() != null) {
+            Person father = people.get(user.getFatherID());
+            paternalAncestorsMales.add(father.getPersonID());
+            childrenMap.put(user.getFatherID(), user);
+
+            setFatherSide(father);
+        }
+
+        if(user.getMotherID() != null) {
+            Person mother = people.get(user.getMotherID());
+            maternalAncestorsFemales.add(mother.getPersonID());
+            childrenMap.put(user.getMotherID(), user);
+
+            setMotherSide(mother);
+        }
+    }
+
+    /**
+     * Recursive function to store paternal side of users family
+     *
+     * @param currPerson
+     */
+    public void setFatherSide(Person currPerson) {
+
+        if(currPerson.getFatherID() != null) {
+            Person father = people.get(currPerson.getFatherID());
+            paternalAncestorsMales.add(father.getPersonID());
+            childrenMap.put(currPerson.getFatherID(), currPerson);
+
+            setFatherSide(father);
+        }
+
+        if(currPerson.getMotherID() != null) {
+            Person mother = people.get(currPerson.getMotherID());
+            paternalAncestorsFemales.add(mother.getPersonID());
+            childrenMap.put(currPerson.getMotherID(), currPerson);
+
+            setFatherSide(mother);
+        }
+    }
+
+    /**
+     *
+     * Recursive function to store maternal side of users family
+     *
+     * @param currPerson
+     */
+    public void setMotherSide(Person currPerson) {
+
+        if(currPerson.getFatherID() != null) {
+            Person father = people.get(currPerson.getFatherID());
+            maternalAncestorsMales.add(father.getPersonID());
+            childrenMap.put(currPerson.getFatherID(), currPerson);
+
+            setMotherSide(father);
+        }
+
+        if(currPerson.getMotherID() != null) {
+            Person mother = people.get(currPerson.getMotherID());
+            maternalAncestorsFemales.add(mother.getPersonID());
+            childrenMap.put(currPerson.getMotherID(), currPerson);
+
+            setMotherSide(mother);
+        }
+
+    }
+
+    /**
+     * This function set the spouse for the user and family
+     *
+     */
+    public void setSpouse() {
+
+        if (user.getGender().equals('m')) {
+            maleSpouse.add(user.getPersonID());
+        } else {
+            femaleSpouse.add(user.getPersonID());
+        }
+
+        if(user.getSpouseID() != null) {
+
+            Person spouse = people.get(user.getSpouseID());
+
+            if(spouse.getGender().equals('m')) {
+                maleSpouse.add(spouse.getPersonID());
+            } else {
+                femaleSpouse.add(spouse.getPersonID());
+            }
+        }
+    }
 
     /********* Settings Switch Getter and Setter Found Here *********/
 
