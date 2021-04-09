@@ -35,6 +35,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name="Activity.SettingsActivity"
+            android:label="Family Map"
+            android:noHistory="true">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.family_map_client.MainActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.SETTINGS"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

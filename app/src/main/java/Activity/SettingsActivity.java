@@ -24,10 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
         // Family Map Switch Settings:
 
         Switch lifeStoryLinesSwitch = this.findViewById(R.id.lifeStoryLinesSwitch);
