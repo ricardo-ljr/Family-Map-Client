@@ -29,8 +29,8 @@ public class DataCache {
     }
 
     private Map<String, Person> people;
-    private Map<String, Event> events;
-    private Map<String, List<Event>> personEvents; // list of chronologically sorted events
+    private Map<String, Event> events; // list of event ID's
+    private Map<String, ArrayList<Event>> personEvents; // list of chronologically sorted events
     private List<String> eventTypes;
     private Set<String> paternalAncestors;
     private Set<String> maternalAncestors;
@@ -70,6 +70,11 @@ public class DataCache {
     private boolean isMaleEventsOn = true;
     private boolean isFemaleEventsOn = true;
 
+
+    /******** Variables that handle event functions ********/
+
+    private boolean isLoggedIn = false;
+    private String eventID = new String();
 
 
     public String getAuthtoken() {
@@ -141,6 +146,22 @@ public class DataCache {
         this.user = user;
     }
 
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
+    }
+
+    public String getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
+    }
+
 
     /**
      * Storing all persons for logged in user
@@ -154,6 +175,72 @@ public class DataCache {
             people.put(persons[i].getPersonID(), persons[i]);
         }
     }
+
+    /**
+     * Storing all events for logged in user and respective family tree
+     *
+     * @param event
+     */
+    public void setEvents(Event[] event) {
+        setLoggedIn(true);
+        setEventID(event[0].getEventID());
+
+        //Store temp keys as EventID for later use
+        Map<String, ArrayList<Event>> tempEvent = new HashMap<>();
+
+        for (int i = 0; i < event.length; i++) {
+            events.put(event[i].getPersonID(), event[i]);
+            eventTypes.add(event[i].getEventType().toLowerCase());
+
+            if(!tempEvent.containsKey(event[i].getPersonID())) {
+                ArrayList<Event> newEventList = new ArrayList<>();
+                tempEvent.put(event[i].getPersonID(), newEventList);
+            }
+
+            tempEvent.get(event[i].getPersonID()).add(event[i]);
+        }
+
+        // Chronologically order for events
+        for (String key : tempEvent.keySet()) {
+            Set birthSet = new HashSet<>();
+            Set deathSet = new HashSet<>();
+            ArrayList<Event> eventList = new ArrayList<Event>();
+
+            // Adding events in chronological order based on events
+            for(int i = 0; i < tempEvent.get(key).size(); i++) {
+                Event currEvent = tempEvent.get(key).get(i);
+
+                if(currEvent.getEventType().toLowerCase().equals("birth")) {
+                    birthSet.add(currEvent);
+                } else if (currEvent.getEventType().toLowerCase().equals("death")) {
+                    deathSet.add(currEvent);
+                } else {
+                    if(eventList.size() > 0) {
+                        if (currEvent.getYear() < eventList.get(0).getYear()) {
+                            eventList.add(0, currEvent);
+                        } else if (currEvent.getYear() >= eventList.get(eventList.size() - 1).getYear()) {
+                            for (int j = 0; j < eventList.size() - 1; j++) {
+                                if(eventList.get(j).getYear() <= currEvent.getYear() && eventList.get(j + 1).getYear() > currEvent.getYear()) {
+                                    eventList.add(j + 1, currEvent);
+                                }
+                            }
+                        }
+                    } else {
+                        eventList.add(currEvent);
+                    }
+                }
+            }
+
+            ArrayList<Event> orderedList = new ArrayList<Event>();
+
+            orderedList.addAll(birthSet);
+            orderedList.addAll(eventList);
+            orderedList.addAll(deathSet);
+
+            personEvents.put(key, orderedList);
+        }
+    }
+
 
 
     /********* Settings Switch Getter and Setter Found Here *********/
