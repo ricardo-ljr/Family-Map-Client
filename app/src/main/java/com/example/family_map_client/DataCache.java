@@ -392,6 +392,36 @@ public class DataCache {
         }
     }
 
+    public String getRelationship(Person currPerson, String personID) {
+        String relationship = new String();
+
+        if(currPerson.getFatherID() != null) {
+            if(currPerson.getFatherID().equals(personID)) {
+                relationship = "Father";
+            }
+        }
+
+        if(currPerson.getMotherID() != null) {
+            if(currPerson.getMotherID().equals(personID)) {
+                relationship = "Mother";
+            }
+        }
+
+        if(currPerson.getSpouseID() != null) {
+            if(currPerson.getSpouseID().equals(personID)) {
+                relationship = "Spouse";
+            }
+        }
+
+        if(getChildrenMap().containsKey(personID)) {
+            if(getChildrenMap().get(personID).getPersonID().equals(personID)) {
+                relationship = "Child";
+            }
+        }
+
+        return relationship;
+    }
+
     /********* Settings Switch Getter and Setter Found Here *********/
 
     public boolean isLifeStoryLinesOn() {
@@ -450,4 +480,7 @@ public class DataCache {
         isFemaleEventsOn = femaleEventsOn;
     }
 
+    public Map<String, Person> getChildrenMap() {
+        return childrenMap;
+    }
 }
