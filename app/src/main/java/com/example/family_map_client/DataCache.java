@@ -31,6 +31,7 @@ public class DataCache {
     private Map<String, Person> people;
     private Map<String, Event> events; // list of event ID's
     private Map<String, ArrayList<Event>> personEvents; // list of chronologically sorted events
+    private Map<String, ArrayList<Event>> currentPersonEvents; // list of current events added to map based on settings
     private List<String> eventTypes;
 
     private Map<String, Person> childrenMap;
@@ -49,6 +50,7 @@ public class DataCache {
         this.people = new HashMap<>();
         this.events = new HashMap<>();
         this.personEvents = new HashMap<>();
+        this.currentPersonEvents = new HashMap<>();
         this.eventTypes = new ArrayList<>();
         this.childrenMap = new HashMap<>();
         this.maleSpouse = new HashSet<>();
@@ -184,6 +186,7 @@ public class DataCache {
             people.put(persons[i].getPersonID(), persons[i]);
         }
 
+        setSpouse();
         setFamilyTree();
     }
 
@@ -347,6 +350,45 @@ public class DataCache {
             } else {
                 femaleSpouse.add(spouse.getPersonID());
             }
+        }
+    }
+
+    /**
+     * This function is in charge of populating the map based on the settings given for the events
+     * Based on the gender filter for the family given according to specs
+     */
+    public void isCurrentEventOn() {
+        // Clear events before putting them back
+        currentPersonEvents.clear();
+
+        ArrayList<String> currentPeopleList = new ArrayList<String>();
+
+        if(isMaleEventsOn) {
+            currentPeopleList.addAll(maleSpouse);
+        }
+        if(isFemaleEventsOn) {
+            currentPeopleList.addAll(femaleSpouse);
+        }
+
+        if(isMaleEventsOn && isFatherSideOn) {
+            currentPeopleList.addAll(paternalAncestorsMales);
+        }
+        if(isFemaleEventsOn && isMotherSideOn) {
+            currentPeopleList.addAll(paternalAncestorsFemales);
+        }
+
+        if(isMaleEventsOn && isMotherSideOn) {
+            currentPeopleList.addAll(maternalAncestorsMales);
+        }
+        if(isFemaleEventsOn && isMotherSideOn) {
+            currentPeopleList.addAll(maternalAncestorsFemales);
+        }
+
+        for (int i = 0; i < currentPeopleList.size(); i++) {
+            String personID = currentPeopleList.get(i);
+            ArrayList<Event> eventList = personEvents.get(personID);
+
+            currentPersonEvents.put(personID, eventList);
         }
     }
 
