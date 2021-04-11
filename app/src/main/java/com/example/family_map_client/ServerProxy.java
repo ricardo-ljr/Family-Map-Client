@@ -14,6 +14,7 @@ import JSONReader.ReadWrite;
 import JSONReader.Serializer;
 import Request.LoginRequest;
 import Request.RegisterRequest;
+import Result.EventsResult;
 import Result.LoginResult;
 import Result.PersonsResult;
 import Result.RegisterResult;
@@ -163,7 +164,7 @@ public class ServerProxy {
 
                 return personsResult;
             } else {
-                System.out.println("Error in register proxy");
+                System.out.println("Error in persons proxy");
             }
 
         } catch (Exception e) {
@@ -180,4 +181,46 @@ public class ServerProxy {
     }
 
     //GetAllEvents in the family tree
+
+    public EventsResult events(URL url, String authToken) {
+        // Serialize request as JSON string
+        // Make HTTP request to server in order to call the web api
+        // Deserialize response body to LoginResult object
+
+        EventsResult eventsResult = new EventsResult();
+
+        try {
+
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+            http.setRequestMethod("GET");
+            http.setDoOutput(false); // there is no request body
+            http.addRequestProperty("Accept", "application/json");
+            http.addRequestProperty("Authorization", authToken);
+
+            http.connect();
+
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                InputStream resBody = http.getInputStream(); // parse JSON data out of the response body
+
+                String reqData = ReadWrite.readString(resBody);
+
+                eventsResult = Deserializer.deserialize(reqData, EventsResult.class);
+
+                http.getInputStream().close();
+
+                return eventsResult;
+            } else {
+                System.out.println("Error in events proxy");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        eventsResult.setSuccess(false);
+        eventsResult.setMessage("Error in ServerProxy when retrieving user's events");
+        return eventsResult;
+    }
+
 }
