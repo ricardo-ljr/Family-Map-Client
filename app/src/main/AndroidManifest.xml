@@ -28,56 +28,37 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:label="Family Map"
+            android:launchMode="singleTop"> // Fully working now with this
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name="Activity.SettingsActivity"
-            android:label="Family Map">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.family_map_client.MainActivity"/>
-            <intent-filter>
-                <action android:name="android.intent.action.SETTINGS"/>
-            </intent-filter>
+            android:label="Family Map"
+            android:parentActivityName=".MainActivity">
         </activity>
 
 <!--        <activity-->
 <!--            android:name="Activity.SearchActivity"-->
-<!--            android:label="Family Map">-->
-<!--            <meta-data-->
-<!--                android:name="android.support.PARENT_ACTIVITY"-->
-<!--                android:value="com.example.family_map_client.MainActivity"/>-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.SEARCH"/>-->
-<!--            </intent-filter>-->
+<!--            android:label="Family Map"-->
+<!--            android:parentActivityName=".MainActivity>-->
 <!--        </activity>-->
 
         <activity
             android:name="Activity.PersonActivity"
-            android:label="Family Map">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.family_map_client.MainActivity"/>
-            <intent-filter>
-                <action android:name="android.intent.action.PERSON"/>
-            </intent-filter>
+            android:label="Family Map"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <activity
             android:name="Activity.EventActivity"
-            android:label="Family Map" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.family_map_client.MainActivity"/>
-            <intent-filter>
-                <action android:name="android.intent.action.EVENT"/>
-            </intent-filter>
+            android:label="Family Map"
+            android:parentActivityName=".MainActivity">
         </activity>
 
 
