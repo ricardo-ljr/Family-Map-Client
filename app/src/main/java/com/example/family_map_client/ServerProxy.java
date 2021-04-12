@@ -36,6 +36,8 @@ public class ServerProxy {
         // Make HTTP request to server in order to call the web api
         // Deserialize response body to LoginResult object
         LoginResult loginResult = new LoginResult();
+        DataCache data = DataCache.getInstance();
+
         try {
 
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -62,6 +64,8 @@ public class ServerProxy {
                 loginResult = Deserializer.deserialize(resData, LoginResult.class);
 
                 http.getInputStream().close();
+
+                data.setLoggedIn(true); // keeps track of user being logged in
 
                 return loginResult;
             }
@@ -192,6 +196,7 @@ public class ServerProxy {
         try {
 
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
+
             http.setRequestMethod("GET");
             http.setDoOutput(false); // there is no request body
             http.addRequestProperty("Accept", "application/json");

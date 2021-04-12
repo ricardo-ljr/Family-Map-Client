@@ -1,5 +1,7 @@
 package com.example.family_map_client;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -86,6 +88,8 @@ public class DataCache {
 
     private boolean isLoggedIn = false;
     private String eventID = new String();
+    private boolean personOrSearch = false;
+    private LatLng startLocation = new LatLng(-34, 151);
 
 
     public String getAuthtoken() {
@@ -173,6 +177,130 @@ public class DataCache {
         this.eventID = eventID;
     }
 
+    public boolean isPersonOrSearch() {
+        return personOrSearch;
+    }
+
+    public void setPersonOrSearch(boolean personOrSearch) {
+        this.personOrSearch = personOrSearch;
+    }
+
+    public LatLng getStartLocation() {
+        return startLocation;
+    }
+
+    public void setStartLocation(LatLng startLocation) {
+        this.startLocation = startLocation;
+    }
+
+    /********** Getter and Setter for HashMaps and Lists **********/
+
+    public Map<String, Person> getPeople() {
+        return people;
+    }
+
+    public void setPeople(Map<String, Person> people) {
+        this.people = people;
+    }
+
+    public Map<String, Event> getEvents() {
+        return events;
+    }
+
+    public void setEvents(Map<String, Event> events) {
+        this.events = events;
+    }
+
+    public Map<String, ArrayList<Event>> getPersonEvents() {
+        return personEvents;
+    }
+
+    public void setPersonEvents(Map<String, ArrayList<Event>> personEvents) {
+        this.personEvents = personEvents;
+    }
+
+    public Map<String, ArrayList<Event>> getCurrentPersonEvents() {
+        return currentPersonEvents;
+    }
+
+    public void setCurrentPersonEvents(Map<String, ArrayList<Event>> currentPersonEvents) {
+        this.currentPersonEvents = currentPersonEvents;
+    }
+
+    public List<String> getEventTypes() {
+        return eventTypes;
+    }
+
+    public void setEventTypes(List<String> eventTypes) {
+        this.eventTypes = eventTypes;
+    }
+
+    public Map<String, Person> getChildrenMap() {
+        return childrenMap;
+    }
+
+    public void setChildrenMap(Map<String, Person> childrenMap) {
+        this.childrenMap = childrenMap;
+    }
+
+    public Set<String> getMaleSpouse() {
+        return maleSpouse;
+    }
+
+    public void setMaleSpouse(Set<String> maleSpouse) {
+        this.maleSpouse = maleSpouse;
+    }
+
+    public Set<String> getFemaleSpouse() {
+        return femaleSpouse;
+    }
+
+    public void setFemaleSpouse(Set<String> femaleSpouse) {
+        this.femaleSpouse = femaleSpouse;
+    }
+
+    public Set<String> getPaternalAncestorsMales() {
+        return paternalAncestorsMales;
+    }
+
+    public void setPaternalAncestorsMales(Set<String> paternalAncestorsMales) {
+        this.paternalAncestorsMales = paternalAncestorsMales;
+    }
+
+    public Set<String> getPaternalAncestorsFemales() {
+        return paternalAncestorsFemales;
+    }
+
+    public void setPaternalAncestorsFemales(Set<String> paternalAncestorsFemales) {
+        this.paternalAncestorsFemales = paternalAncestorsFemales;
+    }
+
+    public Set<String> getMaternalAncestorsMales() {
+        return maternalAncestorsMales;
+    }
+
+    public void setMaternalAncestorsMales(Set<String> maternalAncestorsMales) {
+        this.maternalAncestorsMales = maternalAncestorsMales;
+    }
+
+    public Set<String> getMaternalAncestorsFemales() {
+        return maternalAncestorsFemales;
+    }
+
+    public void setMaternalAncestorsFemales(Set<String> maternalAncestorsFemales) {
+        this.maternalAncestorsFemales = maternalAncestorsFemales;
+    }
+
+    public Map<String, List<Person>> getPersonChildren() {
+        return personChildren;
+    }
+
+    public void setPersonChildren(Map<String, List<Person>> personChildren) {
+        this.personChildren = personChildren;
+    }
+
+    /*********** Functions to Store user's Family Tree, Events and Relatives/Immediate Family Members ***********/
+
 
     /**
      * Storing all persons for logged in user
@@ -196,13 +324,14 @@ public class DataCache {
      * @param event
      */
     public void setEvents(Event[] event) {
-        setLoggedIn(true);
+
         setEventID(event[0].getEventID());
 
         //Store temp keys as EventID for later use
         Map<String, ArrayList<Event>> tempEvent = new HashMap<>();
 
         for (int i = 0; i < event.length; i++) {
+
             events.put(event[i].getPersonID(), event[i]);
             eventTypes.add(event[i].getEventType().toLowerCase());
 
@@ -385,6 +514,7 @@ public class DataCache {
         }
 
         for (int i = 0; i < currentPeopleList.size(); i++) {
+
             String personID = currentPeopleList.get(i);
             ArrayList<Event> eventList = personEvents.get(personID);
 
@@ -392,6 +522,13 @@ public class DataCache {
         }
     }
 
+    /**
+     * This function will take the curretn user's family tree, and output a string of the relationship with the users family
+     *
+     * @param currPerson
+     * @param personID
+     * @return
+     */
     public String getRelationship(Person currPerson, String personID) {
         String relationship = new String();
 
@@ -480,7 +617,4 @@ public class DataCache {
         isFemaleEventsOn = femaleEventsOn;
     }
 
-    public Map<String, Person> getChildrenMap() {
-        return childrenMap;
-    }
 }
