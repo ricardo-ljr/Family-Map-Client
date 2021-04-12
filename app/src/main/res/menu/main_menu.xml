@@ -4,8 +4,9 @@
     android:id="@+id/menuIcons">
 
     <item android:id="@+id/searchMenuItem"
-    android:title="Search" android:icon="@drawable/ic_launcher_background"
-    app:showAsAction="always"/>
+        android:title="Search"
+        android:icon="@drawable/ic_launcher_background"
+        app:showAsAction="always"/>
 
     <item android:id="@+id/settingsMenuItem"
         android:title="Settings"
