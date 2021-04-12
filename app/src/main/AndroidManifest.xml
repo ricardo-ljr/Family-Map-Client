@@ -28,13 +28,16 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".MainActivity"
+        <activity
+            android:name="Activity.PersonActivity"
             android:label="Family Map"
-            android:launchMode="singleTop"> // Fully working now with this
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:parentActivityName=".MainActivity">
+        </activity>
+
+        <activity
+            android:name="Activity.EventActivity"
+            android:label="Family Map"
+            android:parentActivityName=".MainActivity">
         </activity>
 
         <activity
@@ -48,16 +51,13 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-        <activity
-            android:name="Activity.PersonActivity"
+        <activity android:name=".MainActivity"
             android:label="Family Map"
-            android:parentActivityName=".MainActivity">
-        </activity>
-
-        <activity
-            android:name="Activity.EventActivity"
-            android:label="Family Map"
-            android:parentActivityName=".MainActivity">
+            android:launchMode="singleTop"> // Fully working now with this
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 

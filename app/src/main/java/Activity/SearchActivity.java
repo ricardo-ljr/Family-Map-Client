@@ -31,7 +31,7 @@ import Model.Person;
 public class SearchActivity extends AppCompatActivity {
 
     private static final int PERSON_ITEM_VIEW_TYPE = 0;
-    private static final int EVENT_ITEM_VIEW_TYPE = 0;
+    private static final int EVENT_ITEM_VIEW_TYPE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -165,24 +165,24 @@ public class SearchActivity extends AppCompatActivity {
             Drawable eventIcon = new IconDrawable(SearchActivity.this, FontAwesomeIcons.fa_map_marker).colorRes(R.color.black).sizeDp(40);
             icon.setImageDrawable(eventIcon);
 
-            String fullName = person.getFirstName() + " " + person.getLastName() + " - " + event.getEventType() + " \n" + event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")" ;
+            String fullName = person.getFirstName() + " " + person.getLastName();
             personName.setText(fullName);
-//            String type = event.getEventType();
-//            eventType.setText(type);
-//            String namePlace1 = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
-//            namePlace.setText(namePlace1);
+            String type = event.getEventType();
+            eventType.setText(type);
+            String namePlace1 = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
+            namePlace.setText(namePlace1);
         }
         @Override
         public void onClick(View v) {
 
             if(viewType == PERSON_ITEM_VIEW_TYPE) {
-                Intent intent = new Intent(SearchActivity.this, PersonActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PersonActivity.class);
                 intent.putExtra("personID", person.getPersonID());
                 startActivity(intent);
             } else {
                 DataCache data = DataCache.getInstance();
                 data.setPersonOrSearch(true);
-                Intent intent = new Intent(SearchActivity.this, EventActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EventActivity.class);
                 intent.putExtra("eventID", event.getEventID());
                 startActivity(intent);
             }

@@ -1,5 +1,6 @@
 package Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,14 +17,13 @@ import ui.MapFragment;
 
 public class EventActivity extends AppCompatActivity {
 
-    private String eventID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        eventID = getIntent().getStringExtra("eventID");
+        Intent myIntent = getIntent();
+        String eventID = myIntent.getStringExtra("eventID");
 
         DataCache data = DataCache.getInstance();
         data.setEventID(eventID); // storing event ID for list
