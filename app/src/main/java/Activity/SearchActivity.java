@@ -1,5 +1,9 @@
 package Activity;
 
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.Icon;
+import android.graphics.fonts.Font;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +16,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.family_map_client.DataCache;
 import com.example.family_map_client.R;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 
 import java.util.ArrayList;
 
@@ -35,16 +42,18 @@ public class SearchActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+
+                SearchAdapter adapter = new SearchAdapter(personSearch(query.toLowerCase()), eventSearch(query.toLowerCase()));
+
+                recyclerView.setAdapter(adapter);
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
-
-                SearchAdapter adapter = new SearchAdapter(personArrayList, eventArrayList)
-
                 return false;
             }
         });
@@ -76,7 +85,7 @@ public class SearchActivity extends AppCompatActivity {
                 view = getLayoutInflater().inflate(R.layout.list_event, parent, false);
             }
 
-            return new SearchViewHolder()(view, viewType);
+            return new SearchViewHolder(view, viewType);
         }
 
         @Override
@@ -121,13 +130,103 @@ public class SearchActivity extends AppCompatActivity {
                 personName = itemView.findViewById(R.id.EventPerson1);
                 eventType = itemView.findViewById(R.id.EventType1);
                 namePlace = itemView.findViewById(R.id.EventTimePlace1);
-
             }
+        }
+
+        private void bind(Person person) {
+            this.person = person;
+
+            if(person.getGender().equals("m")) {
+                Drawable genderIcon = new IconDrawable(SearchActivity.this, FontAwesomeIcons.fa_male).colorRes(R.color.blue).sizeDp(40);
+                icon.setImageDrawable(genderIcon);
+            } else {
+                Drawable genderIcon = new IconDrawable(SearchActivity.this, FontAwesomeIcons.fa_female).colorRes(R.color.pink).sizeDp(40);
+                icon.setImageDrawable(genderIcon);
+            }
+
+            String fullName = person.getFirstName() + " " + person.getLastName();
+            personName.setText(fullName.toUpperCase());
+        }
+
+        private void bind(Event event) {
+            this.event = event;
+
+            DataCache data = DataCache.getInstance();
+
+            Person peron = data.getPeople().get(event.getPersonID());
+
+            Drawable eventIcon = new IconDrawable(SearchActivity.this, FontAwesomeIcons.fa_map_marker).colorRes(R.color.black).sizeDp(40);
+            icon.setImageDrawable(eventIcon);
+
+            String fullName = person.getFirstName() + " " + person.getLastName();
+            personName.setText(fullName.toUpperCase());
+
+            eventType.setText(event.getEventType());
+            String namePlace1 = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
+            namePlace.setText(namePlace1);
         }
         @Override
         public void onClick(View v) {
 
+            if(viewType == PERSON_ITEM_VIEW_TYPE) {
+                Intent intent = new Intent(SearchActivity.this, PersonActivity.class);
+                intent.putExtra("personID", person.getPersonID());
+                startActivity(intent);
+            } else {
+                DataCache data = DataCache.getInstance();
+                data.setPersonOrSearch(true);
+                Intent intent = new Intent(SearchActivity.this, EventActivity.class);
+                intent.putExtra("eventID", event.getEventID());
+                startActivity(intent);
+            }
+
         }
+    }
+
+    public ArrayList<Person> personSearch(String query) {
+        DataCache data = DataCache.getInstance();
+
+        ArrayList<Person> personList = new ArrayList<>();
+
+        for(String key : data.getPeople().keySet()) {
+            Person currPerson = data.getPeople().get(key);
+
+            if(currPerson.getFirstName().toLowerCase().contains(query)) {
+                personList.add(currPerson);
+            } else if(currPerson.getLastName().toLowerCase().contains(query)) {
+                personList.add(currPerson);
+            }
+        }
+
+        return personList;
+    }
+
+    public ArrayList<Event> eventSearch(String query) {
+        DataCache data = DataCache.getInstance();
+
+        ArrayList<Event> eventList = new ArrayList<>();
+
+        for(String key : data.getCurrentPersonEvents().keySet()) {
+            Person person = data.getPeople().get(key);
+
+            if(person.getFirstName().toLowerCase().contains(query) || person.getLastName().toLowerCase().contains(query)) {
+                eventList.addAll(data.getCurrentPersonEvents().get(key));
+            } else {
+                for(int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
+                    Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
+
+                    if(currEvent.getCountry().toLowerCase().contains(query)) {
+                        eventList.add(currEvent);
+                    } else if(currEvent.getCity().toLowerCase().contains(query)) {
+                        eventList.add(currEvent);
+                    } else if(currEvent.getEventType().toLowerCase().contains(query)) {
+                        eventList.add(currEvent);
+                    }
+                }
+            }
+        }
+
+        return eventList;
     }
 
 }
