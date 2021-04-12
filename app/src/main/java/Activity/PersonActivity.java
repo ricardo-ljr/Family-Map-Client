@@ -36,6 +36,8 @@ public class PersonActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_person);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         DataCache data = DataCache.getInstance();
 
         personID = getIntent().getExtras().getString("personID");
@@ -185,7 +187,7 @@ public class PersonActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     String personID = familyArrayList.get(childPosition).getPersonID();
-                    Intent intent = new Intent(PersonActivity.this, PersonActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), PersonActivity.class);
                     intent.putExtra("personID", personID);
                     startActivity(intent);
                 }
@@ -215,7 +217,7 @@ public class PersonActivity extends AppCompatActivity {
                     DataCache data = DataCache.getInstance();
                     data.setPersonOrSearch(true);
                     String eventID = eventArrayList.get(childPosition).getEventID();
-                    Intent intent = new Intent(PersonActivity.this, EventActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), EventActivity.class);
                     intent.putExtra("eventID", eventID);
                     startActivity(intent);
                 }

@@ -88,7 +88,7 @@ public class DataCache {
 
     private boolean isLoggedIn = false;
     private String eventID = new String();
-    private boolean personOrSearch = false;
+    private boolean personOrSearch = false; // keeps track if it's coming from person or search activity and updated map accordingly
     private LatLng startLocation = new LatLng(-34, 151);
 
 
@@ -327,12 +327,12 @@ public class DataCache {
 
         setEventID(event[0].getEventID());
 
-        //Store temp keys as EventID for later use
+        //Store temp keys as EventID for later use to put it all in order
         Map<String, ArrayList<Event>> tempEvent = new HashMap<>();
 
         for (int i = 0; i < event.length; i++) {
 
-            events.put(event[i].getPersonID(), event[i]);
+            events.put(event[i].getEventID(), event[i]);
             eventTypes.add(event[i].getEventType().toLowerCase());
 
             if(!tempEvent.containsKey(event[i].getPersonID())) {
