@@ -148,8 +148,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         if(data.isPersonOrSearch()) {
             float latitude = data.getEvents().get(data.getEventID()).getLatitude();
             float longitute = data.getEvents().get(data.getEventID()).getLongitude();
+            float zoomLevel = 4.0f;
             LatLng latLng = new LatLng(latitude, longitute);
-            map.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
         }
 
         for(String key : data.getCurrentPersonEvents().keySet()) {
@@ -194,9 +195,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 DataCache data = DataCache.getInstance();
+
                 if(!data.isPersonOrSearch()) {
                     data.setStartLocation(marker.getPosition());
                 }
+
                 clickMarker(marker);
                 return false;
             }
@@ -209,7 +212,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PersonActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("personID", getSelectedPerson());
                 startActivity(intent);
             }
