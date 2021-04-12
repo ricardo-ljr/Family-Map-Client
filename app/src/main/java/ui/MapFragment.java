@@ -40,6 +40,7 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import Activity.PersonActivity;
 import Activity.SearchActivity;
@@ -50,6 +51,7 @@ import Model.Person;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    public static String ARG_EVENT_ID;
     private GoogleMap map;
     private View view;
     private String selectedPerson = new String();
@@ -151,6 +153,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
 
         for(String key : data.getCurrentPersonEvents().keySet()) {
+            float birthColor = BitmapDescriptorFactory.HUE_GREEN;
+            float baptismColor = BitmapDescriptorFactory.HUE_CYAN;
+            float marriageColor = BitmapDescriptorFactory.HUE_MAGENTA;
+            float deathColor = BitmapDescriptorFactory.HUE_ROSE;
+
+
             for (int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
                 Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
 
@@ -158,8 +166,25 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 MarkerOptions options = new MarkerOptions().position(location);
 
-                float color = getColor(currEvent.getEventType());
-                options.icon(BitmapDescriptorFactory.defaultMarker(color));
+                float[] color = new float[] {BitmapDescriptorFactory.HUE_GREEN, BitmapDescriptorFactory.HUE_CYAN,
+                                            BitmapDescriptorFactory.HUE_ROSE, BitmapDescriptorFactory.HUE_MAGENTA,
+                                            BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_ORANGE,
+                                            BitmapDescriptorFactory.HUE_AZURE,BitmapDescriptorFactory.HUE_VIOLET};
+
+                if (currEvent.getEventType().equals("birth")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(birthColor));
+                } else if (currEvent.getEventType().equals("baptism")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(baptismColor));
+                } else if (currEvent.getEventType().equals("marriage")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(marriageColor));
+                } else if (currEvent.getEventType().equals("death")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(deathColor));
+                } else {
+                    Random random = new Random();
+                    int randomColor = random.nextInt(color.length - 1);
+                    options.icon(BitmapDescriptorFactory.defaultMarker(color[randomColor]));
+                }
+
 
                 map.addMarker(options).setTag(currEvent);
             }
@@ -247,7 +272,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if(data.getCurrentPersonEvents().containsKey(selectedPerson.getSpouseID())) {
 
                 LatLng dest = getLatLng(selectedPerson.getSpouseID(), 0);
-                addPolyline(src, dest, Color.YELLOW, currentWidth);
+                addPolyline(src, dest, Color.YELLOW, currentWidth); // spouse line
             }
         }
 
@@ -258,7 +283,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                     LatLng source = getLatLng(selectedPerson.getPersonID(), i);
                     LatLng dest = getLatLng(selectedPerson.getPersonID(), i + 1);
-                    addPolyline(source, dest, Color.RED, currentWidth);
+                    addPolyline(source, dest, Color.RED, currentWidth); // Life Story line
                 }
             }
         }
@@ -325,22 +350,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 data.getCurrentPersonEvents().get(personID).get(position).getLongitude());
 
         return newLatLng;
-    }
-
-
-    public float getColor(String eventType) {
-        DataCache data = DataCache.getInstance();
-        int position = 0;
-
-        for(String entry : data.getEventTypes()) {
-            if(entry.equals(eventType.toLowerCase())) {
-                break;
-            }
-            position++;
-        }
-
-        float finalColor = (360 / data.getEventTypes().size()) * position;
-        return finalColor;
     }
 
 //    @Override
