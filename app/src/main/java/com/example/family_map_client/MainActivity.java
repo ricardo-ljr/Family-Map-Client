@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import Activity.SearchActivity;
 import Activity.SettingsActivity;
 import Request.RegisterRequest;
 import Result.RegisterResult;
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void displaySettings() {
         Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
+    }
+
+    public void displaySearch() {
+        Intent intent = new Intent(this, SearchActivity.class);
         startActivity(intent);
     }
 

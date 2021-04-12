@@ -562,8 +562,38 @@ public class DataCache {
         } else {
             return "Child";
         }
+    }
 
+    /********* Search Activity Helpers *********/
 
+    public ArrayList<Person> getSearchedPeople(String search) {
+        ArrayList<Person> filterPeople = new ArrayList<>();
+
+        if(!search.isEmpty()) {
+            for(Person person : people.values()) {
+                if((person.getFirstName().toLowerCase().contains(search.toLowerCase()) ||
+                    person.getLastName().toLowerCase().contains(search.toLowerCase()))) {
+                    filterPeople.add(person);
+                }
+            }
+        }
+        return filterPeople;
+    }
+
+    public ArrayList<Event> getSearchedEvent(String search) {
+        ArrayList<Event> filterEvents = new ArrayList<>();
+
+        if(!search.isEmpty()) {
+            for(Event event : events.values()) {
+                if(event.getEventType().toLowerCase().contains(search.toLowerCase()) ||
+                        event.getCountry().toLowerCase().contains(search.toLowerCase()) ||
+                        event.getCity().toLowerCase().contains(search.toLowerCase()) ||
+                        String.valueOf(event.getYear()).contains(search.toLowerCase())) {
+                    filterEvents.add(event);
+                }
+            }
+        }
+        return filterEvents;
     }
 
     /********* Settings Switch Getter and Setter Found Here *********/

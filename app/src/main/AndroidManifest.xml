@@ -44,7 +44,7 @@
         </activity>
 
         <activity android:name="Activity.SearchActivity"
-            android:label="Family Map"
+            android:label="Family Map Search"
             android:parentActivityName=".MainActivity">
         </activity>
 

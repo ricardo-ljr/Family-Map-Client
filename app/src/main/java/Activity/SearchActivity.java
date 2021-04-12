@@ -5,6 +5,8 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.Icon;
 import android.graphics.fonts.Font;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -31,29 +33,34 @@ public class SearchActivity extends AppCompatActivity {
     private static final int PERSON_ITEM_VIEW_TYPE = 0;
     private static final int EVENT_ITEM_VIEW_TYPE = 0;
 
-    private SearchView searchView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        searchView = findViewById(R.id.searchView);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        SearchView searchView = findViewById(R.id.searchView);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
             @Override
             public boolean onQueryTextSubmit(String query) {
-                RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
-                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
 
-                SearchAdapter adapter = new SearchAdapter(personSearch(query.toLowerCase()), eventSearch(query.toLowerCase()));
-
-                recyclerView.setAdapter(adapter);
-
+//                DataGenerator generator = new DataGenerator();
+//                List<SkiResort> skiResorts = generator.getSkiResorts();
+//                List<HikingTrail> hikingTrails = generator.getHikingTrails();
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                RecyclerView recyclerView = findViewById(R.id.searchRecyclerView);
+                recyclerView.setLayoutManager(new LinearLayoutManager(SearchActivity.this));
+
+                SearchAdapter adapter = new SearchAdapter(personSearch(newText.toLowerCase()), eventSearch(newText.toLowerCase()));
+
+                recyclerView.setAdapter(adapter);
+
                 return false;
             }
         });
@@ -101,6 +108,7 @@ public class SearchActivity extends AppCompatActivity {
         public int getItemCount() {
             return personArrayList.size() + eventArrayList.size();
         }
+
     }
 
     private class SearchViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -152,18 +160,17 @@ public class SearchActivity extends AppCompatActivity {
             this.event = event;
 
             DataCache data = DataCache.getInstance();
-
-            Person peron = data.getPeople().get(event.getPersonID());
+            Person person = data.getPeople().get(event.getPersonID());
 
             Drawable eventIcon = new IconDrawable(SearchActivity.this, FontAwesomeIcons.fa_map_marker).colorRes(R.color.black).sizeDp(40);
             icon.setImageDrawable(eventIcon);
 
-            String fullName = person.getFirstName() + " " + person.getLastName();
-            personName.setText(fullName.toUpperCase());
-
-            eventType.setText(event.getEventType());
-            String namePlace1 = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
-            namePlace.setText(namePlace1);
+            String fullName = person.getFirstName() + " " + person.getLastName() + " - " + event.getEventType() + " \n" + event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")" ;
+            personName.setText(fullName);
+//            String type = event.getEventType();
+//            eventType.setText(type);
+//            String namePlace1 = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
+//            namePlace.setText(namePlace1);
         }
         @Override
         public void onClick(View v) {
@@ -186,7 +193,7 @@ public class SearchActivity extends AppCompatActivity {
     public ArrayList<Person> personSearch(String query) {
         DataCache data = DataCache.getInstance();
 
-        ArrayList<Person> personList = new ArrayList<>();
+        ArrayList<Person> personList = new ArrayList<Person>();
 
         for(String key : data.getPeople().keySet()) {
             Person currPerson = data.getPeople().get(key);
@@ -220,6 +227,8 @@ public class SearchActivity extends AppCompatActivity {
                     } else if(currEvent.getCity().toLowerCase().contains(query)) {
                         eventList.add(currEvent);
                     } else if(currEvent.getEventType().toLowerCase().contains(query)) {
+                        eventList.add(currEvent);
+                    } else if(Integer.toString(currEvent.getYear()).contains(query)) {
                         eventList.add(currEvent);
                     }
                 }
