@@ -43,11 +43,10 @@
             android:parentActivityName=".MainActivity">
         </activity>
 
-<!--        <activity-->
-<!--            android:name="Activity.SearchActivity"-->
-<!--            android:label="Family Map"-->
-<!--            android:parentActivityName=".MainActivity>-->
-<!--        </activity>-->
+        <activity android:name="Activity.SearchActivity"
+            android:label="Family Map"
+            android:parentActivityName=".MainActivity">
+        </activity>
 
         <activity
             android:name="Activity.PersonActivity"
