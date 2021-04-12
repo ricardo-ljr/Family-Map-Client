@@ -1,6 +1,7 @@
 package Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.family_map_client.BuildConfig;
 import com.example.family_map_client.DataCache;
+import com.example.family_map_client.MainActivity;
 import com.example.family_map_client.R;
 
 public class SettingsActivity extends AppCompatActivity {
@@ -26,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Family Map Switch Settings:
 
-        Switch lifeStoryLinesSwitch = this.findViewById(R.id.lifeStoryLinesSwitch);
+        Switch lifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
 
         if (data.isLifeStoryLinesOn()) {
             lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -41,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch familyTreeLinesSwitch = this.findViewById(R.id.familyTreeLinesSwitch);
+        Switch familyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
 
         if (data.isFamilyTreeLinesOn()) {
             familyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -57,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
-        Switch spouseLinesSwitch = this.findViewById(R.id.spouseLinesSwitch);
+        Switch spouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
 
         if (data.isSpouseLinesOn()) {
             spouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -72,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch fatherSideSwitch = this.findViewById(R.id.settingFatherSideSwitch);
+        Switch fatherSideSwitch = (Switch) findViewById(R.id.settingFatherSideSwitch);
 
         if (data.isFatherSideOn()) {
             fatherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -87,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch motherSideSwitch = this.findViewById(R.id.settingMotherSideSwitch);
+        Switch motherSideSwitch = (Switch) findViewById(R.id.settingMotherSideSwitch);
 
         if (data.isMotherSideOn()) {
             motherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -102,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch maleEventSwitch = this.findViewById(R.id.settingMaleEventsSwitch);
+        Switch maleEventSwitch = (Switch) findViewById(R.id.settingMaleEventsSwitch);
 
         if (data.isMaleEventsOn()) {
             maleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -117,7 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch femaleEventSwitch = this.findViewById(R.id.settingFemaleEventSwitch);
+        Switch femaleEventSwitch = (Switch) findViewById(R.id.settingFemaleEventSwitch);
 
         if (data.isFemaleEventsOn()) {
             femaleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -132,14 +134,18 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        // FINISH IMPLEMENTING LOGOUT LATER
-//        RelativeLayout logoutLayout = this.findViewById(R.id.logoutButton);
-//        logoutLayout.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        RelativeLayout logoutLayout = (RelativeLayout) findViewById(R.id.logoutButton);
+        logoutLayout.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                DataCache data = DataCache.getInstance();
+                data.logout();
+                Intent intent = new Intent(context, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 }

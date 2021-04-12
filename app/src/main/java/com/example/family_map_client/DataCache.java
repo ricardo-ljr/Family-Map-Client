@@ -654,4 +654,43 @@ public class DataCache {
         isFemaleEventsOn = femaleEventsOn;
     }
 
+    public void logout() {
+
+        // Instance, user and token become null
+        instance = null;
+        user = null;
+        authtoken = null;
+
+        // Switch all the settings back to true
+        isLifeStoryLinesOn = true;
+        isFamilyTreeLinesOn = true;
+        isSpouseLinesOn = true;
+        isFatherSideOn = true;
+        isMotherSideOn = true;
+        isMaleEventsOn = true;
+        isFemaleEventsOn = true;
+
+        //Take care of resetting boolean logics use throughout app
+        isLoggedIn = false;
+        personOrSearch = false;
+        startLocation = null;
+        eventID = null;
+
+        // Clear all lists
+
+        people.clear();
+        events.clear();
+        personEvents.clear();
+        currentPersonEvents.clear();
+        eventTypes.clear();
+
+        childrenMap.clear();
+        maleSpouse.clear();
+        femaleSpouse.clear();
+        paternalAncestorsMales.clear();
+        paternalAncestorsFemales.clear();
+        maternalAncestorsMales.clear();
+        maternalAncestorsFemales.clear();
+    }
+
 }
