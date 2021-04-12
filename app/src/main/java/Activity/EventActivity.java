@@ -1,8 +1,11 @@
 package Activity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -20,11 +23,14 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-        eventID = getIntent().getExtras().getString("eventID");
+        eventID = getIntent().getStringExtra("eventID");
 
         DataCache data = DataCache.getInstance();
         data.setEventID(eventID); // storing event ID for list
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Creating fragment map for event display
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.eventContainer);
 
@@ -38,6 +44,6 @@ public class EventActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         DataCache data = DataCache.getInstance();
-        data.setPersonOrSearch(false); // keep track of when activity ends
+        data.setPersonOrSearch(false); // keep track of when activity ends, and switches to false
     }
 }
