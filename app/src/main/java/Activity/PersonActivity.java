@@ -60,12 +60,13 @@ public class PersonActivity extends AppCompatActivity {
 
     private class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-        private ArrayList<Person> familyArrayList;
         private ArrayList<Event> eventArrayList;
+        private ArrayList<Person> familyArrayList;
 
         public ExpandableListAdapter(ArrayList<Person> familyArrayList, ArrayList<Event> eventArrayList) {
-            this.familyArrayList = familyArrayList;
             this.eventArrayList = eventArrayList;
+            this.familyArrayList = familyArrayList;
+
         }
 
         @Override
@@ -77,9 +78,9 @@ public class PersonActivity extends AppCompatActivity {
         public int getChildrenCount(int groupPosition) {
             switch (groupPosition) {
                 case 0:
-                    return familyArrayList.size();
-                case 1:
                     return eventArrayList.size();
+                case 1:
+                    return familyArrayList.size();
                 default:
                     return Integer.parseInt(null);
             }
@@ -89,9 +90,9 @@ public class PersonActivity extends AppCompatActivity {
         public Object getGroup(int groupPosition) {
             switch (groupPosition) {
                 case 0:
-                    return "Family";
-                case 1:
                     return "Event";
+                case 1:
+                    return "Family";
                 default:
                     return null;
             }
@@ -101,9 +102,9 @@ public class PersonActivity extends AppCompatActivity {
         public Object getChild(int groupPosition, int childPosition) {
             switch (groupPosition) {
                 case 0:
-                    return familyArrayList.get(childPosition);
-                case 1:
                     return eventArrayList.get(childPosition);
+                case 1:
+                    return familyArrayList.get(childPosition);
                 default:
                     return null;
             }
@@ -133,9 +134,9 @@ public class PersonActivity extends AppCompatActivity {
             TextView title = convertView.findViewById(R.id.nameOfList);
 
             if (groupPosition == 0) {
-                title.setText("Family");
-            } else {
                 title.setText("Life Events");
+            } else {
+                title.setText("Family");
             }
 
             return convertView;
@@ -146,11 +147,11 @@ public class PersonActivity extends AppCompatActivity {
             View view;
 
             if (groupPosition == 0) {
-                view = getLayoutInflater().inflate(R.layout.list_person, parent, false);
-                familyView(view, childPosition);
-            } else {
                 view = getLayoutInflater().inflate(R.layout.list_event, parent, false);
                 eventView(view, childPosition);
+            } else {
+                view = getLayoutInflater().inflate(R.layout.list_person, parent, false);
+                familyView(view, childPosition);
             }
 
             return view;
@@ -161,7 +162,7 @@ public class PersonActivity extends AppCompatActivity {
 
             // Set gender icons based on gender retrieved
             ImageView icon = personView.findViewById(R.id.iconPerson);
-            if (familyArrayList.get(childPosition).getGender().equals('m')) {
+            if (familyArrayList.get(childPosition).getGender().equals("m")) {
                 Drawable genderIcon = new IconDrawable(PersonActivity.this, FontAwesomeIcons.fa_male).colorRes(R.color.blue).sizeDp(40);
                 icon.setImageDrawable(genderIcon);
             } else {
@@ -196,16 +197,16 @@ public class PersonActivity extends AppCompatActivity {
 
 
             ImageView icon = eventView.findViewById(R.id.iconEvent);
-            Drawable eventIcon = new IconDrawable(PersonActivity.this, FontAwesomeIcons.fa_map_marker).colorRes(R.color.blue).sizeDp(50);
+            Drawable eventIcon = new IconDrawable(PersonActivity.this, FontAwesomeIcons.fa_map_marker).colorRes(R.color.black).sizeDp(50);
             icon.setImageDrawable(eventIcon);
 
             TextView personName = eventView.findViewById(R.id.EventPerson1);
-            personName.setText(eventArrayList.get(childPosition).getEventType());
+            personName.setText(eventArrayList.get(childPosition).getEventType().toUpperCase() + ": ");
 
             TextView location = eventView.findViewById(R.id.EventTimePlace1);
-            String place = eventArrayList.get(childPosition).getCity() + " " +
-                    eventArrayList.get(childPosition).getCountry() + " (" +
-                    eventArrayList.get(childPosition).getYear() + ")";
+            String place = eventArrayList.get(childPosition).getCity() + ", " +
+                           eventArrayList.get(childPosition).getCountry() + " (" +
+                           eventArrayList.get(childPosition).getYear() + ")";
             location.setText(place);
 
             eventView.setOnClickListener(new View.OnClickListener() {

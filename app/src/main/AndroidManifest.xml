@@ -46,6 +46,41 @@
                 <action android:name="android.intent.action.SETTINGS"/>
             </intent-filter>
         </activity>
+
+<!--        <activity-->
+<!--            android:name="Activity.SearchActivity"-->
+<!--            android:label="Family Map">-->
+<!--            <meta-data-->
+<!--                android:name="android.support.PARENT_ACTIVITY"-->
+<!--                android:value="com.example.family_map_client.MainActivity"/>-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.SEARCH"/>-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+
+        <activity
+            android:name="Activity.PersonActivity"
+            android:label="Family Map">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.family_map_client.MainActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.PERSON"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="Activity.EventActivity"
+            android:label="Family Map" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.family_map_client.MainActivity"/>
+            <intent-filter>
+                <action android:name="android.intent.action.EVENT"/>
+            </intent-filter>
+        </activity>
+
+
     </application>
 
 </manifest>

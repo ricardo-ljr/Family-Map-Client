@@ -399,6 +399,7 @@ public class DataCache {
             setFatherSide(father);
         }
 
+        //Set Mother's Side
         if(user.getMotherID() != null) {
             Person mother = people.get(user.getMotherID());
             maternalAncestorsFemales.add(mother.getPersonID());
@@ -550,13 +551,19 @@ public class DataCache {
             }
         }
 
-        if(getChildrenMap().containsKey(personID)) {
-            if(getChildrenMap().get(personID).getPersonID().equals(personID)) {
-                relationship = "Child";
-            }
+//        if(getChildrenMap().containsKey(personID)) {
+//            if(getChildrenMap().get(personID).getPersonID().equals(personID)) {
+//                relationship = "Child";
+//            }
+//        }
+
+        if (relationship.length() > 0) {
+            return relationship;
+        } else {
+            return "Child";
         }
 
-        return relationship;
+
     }
 
     /********* Settings Switch Getter and Setter Found Here *********/

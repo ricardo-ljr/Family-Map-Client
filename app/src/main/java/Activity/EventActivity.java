@@ -23,7 +23,7 @@ public class EventActivity extends AppCompatActivity {
         eventID = getIntent().getExtras().getString("eventID");
 
         DataCache data = DataCache.getInstance();
-        data.setEventID(eventID);
+        data.setEventID(eventID); // storing event ID for list
 
         FragmentManager fm = getSupportFragmentManager();
         MapFragment mapFragment = (MapFragment) fm.findFragmentById(R.id.eventContainer);

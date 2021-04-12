@@ -18,7 +18,7 @@
             android:src="@drawable/ic_launcher_background"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
@@ -42,12 +42,6 @@
                 android:textSize="12sp"/>
 
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
