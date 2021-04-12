@@ -38,8 +38,7 @@
 
         <activity
             android:name="Activity.SettingsActivity"
-            android:label="Family Map"
-            android:noHistory="true">
+            android:label="Family Map">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.family_map_client.MainActivity"/>

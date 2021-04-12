@@ -54,9 +54,13 @@ public class LoginTask extends AsyncTask<LoginRequest, Void, LoginResult> {
 
             Toast.makeText(context, "Login Successfully", Toast.LENGTH_SHORT).show();
 
-
+            // Populate user's family on login
             FamilyData familyDataTask = new FamilyData(fragment, context);
             familyDataTask.execute(data.getAuthtoken());
+            // Populate user's events on login
+            EventsTask eventsTask = new EventsTask(fragment, context);
+            eventsTask.execute(data.getAuthtoken());
+
             MainActivity mainActivity = (MainActivity) context;
             mainActivity.displayMap();
 
