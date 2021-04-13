@@ -345,8 +345,8 @@ public class DataCache {
 
         // Chronologically order for events
         for (String key : tempEvent.keySet()) {
-            Set birthSet = new HashSet<>();
-            Set deathSet = new HashSet<>();
+            Set birthSet = new HashSet<>(); // birth events come first
+            Set deathSet = new HashSet<>(); // death events come last (obviously)
             ArrayList<Event> eventList = new ArrayList<Event>();
 
             // Adding events in chronological order based on events
@@ -357,7 +357,7 @@ public class DataCache {
                     birthSet.add(currEvent);
                 } else if (currEvent.getEventType().toLowerCase().equals("death")) {
                     deathSet.add(currEvent);
-                } else {
+                } else { // get events by year and sort them
                     if(eventList.size() > 0) {
                         if (currEvent.getYear() < eventList.get(0).getYear()) {
                             eventList.add(0, currEvent);
