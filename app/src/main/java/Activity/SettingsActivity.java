@@ -27,7 +27,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Family Map Switch Settings:
 
-        Switch lifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
+        Switch lifeStoryLinesSwitch = findViewById(R.id.lifeStoryLinesSwitch);
 
         if (data.isLifeStoryLinesOn()) {
             lifeStoryLinesSwitch.setChecked(true);
@@ -44,7 +44,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        Switch familyTreeLinesSwitch = this.findViewById(R.id.familyTreeLinesSwitch);
+        Switch familyTreeLinesSwitch = findViewById(R.id.familyTreeLinesSwitch);
 
         if (data.isFamilyTreeLinesOn()) {
             familyTreeLinesSwitch.setChecked(true);
@@ -61,7 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
 
-        Switch spouseLinesSwitch = this.findViewById(R.id.spouseLinesSwitch);
+        Switch spouseLinesSwitch = findViewById(R.id.spouseLinesSwitch);
 
         if (data.isSpouseLinesOn()) {
             spouseLinesSwitch.setChecked(true);
@@ -77,7 +77,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-        Switch fatherSideSwitch = this.findViewById(R.id.settingFatherSideSwitch);
+        Switch fatherSideSwitch = findViewById(R.id.settingFatherSideSwitch);
 
         if (data.isFatherSideOn()) {
             fatherSideSwitch.setChecked(true);
@@ -93,7 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-        Switch motherSideSwitch = this.findViewById(R.id.settingMotherSideSwitch);
+        Switch motherSideSwitch = findViewById(R.id.settingMotherSideSwitch);
 
         if (data.isMotherSideOn()) {
             motherSideSwitch.setChecked(true);
@@ -109,7 +109,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-        Switch maleEventSwitch = this.findViewById(R.id.settingMaleEventsSwitch);
+        Switch maleEventSwitch = findViewById(R.id.settingMaleEventsSwitch);
 
         if (data.isMaleEventsOn()) {
             maleEventSwitch.setChecked(true);
@@ -125,7 +125,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-        Switch femaleEventSwitch = this.findViewById(R.id.settingFemaleEventSwitch);
+        Switch femaleEventSwitch = findViewById(R.id.settingFemaleEventSwitch);
 
         if (data.isFemaleEventsOn()) {
             femaleEventSwitch.setChecked(true);
@@ -141,7 +141,7 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-        RelativeLayout logoutLayout = this.findViewById(R.id.logoutButton);
+        RelativeLayout logoutLayout = findViewById(R.id.logoutButton);
         logoutLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override
