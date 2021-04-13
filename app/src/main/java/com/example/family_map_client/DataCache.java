@@ -75,7 +75,7 @@ public class DataCache {
 
     /******* Boolean Variables to check for settings switch ********/
 
-    private boolean isLifeStoryLinesOn = false;
+    private boolean isLifeStoryLinesOn = true;
     private boolean isFamilyTreeLinesOn = true;
     private boolean isSpouseLinesOn = true;
     private boolean isFatherSideOn = true;

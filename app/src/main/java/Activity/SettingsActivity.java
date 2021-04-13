@@ -27,25 +27,29 @@ public class SettingsActivity extends AppCompatActivity {
 
         // Family Map Switch Settings:
 
-        Switch lifeStoryLinesSwitch = this.findViewById(R.id.lifeStoryLinesSwitch);
+        Switch lifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
 
         if (data.isLifeStoryLinesOn()) {
-            lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked) {
-                        data.setLifeStoryLinesOn(true);
-                    } else {
-                        data.setLifeStoryLinesOn(false);
-                    }
-                }
-            });
+            lifeStoryLinesSwitch.setChecked(true);
         }
+
+        lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    data.setLifeStoryLinesOn(true);
+                } else {
+                    data.setLifeStoryLinesOn(false);
+                }
+            }
+        });
 
         Switch familyTreeLinesSwitch = this.findViewById(R.id.familyTreeLinesSwitch);
 
         if (data.isFamilyTreeLinesOn()) {
-            familyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            familyTreeLinesSwitch.setChecked(true);
+        }
+        familyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -55,13 +59,14 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
 
         Switch spouseLinesSwitch = this.findViewById(R.id.spouseLinesSwitch);
 
         if (data.isSpouseLinesOn()) {
-            spouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            spouseLinesSwitch.setChecked(true);
+        }
+        spouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -71,12 +76,13 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
         Switch fatherSideSwitch = this.findViewById(R.id.settingFatherSideSwitch);
 
         if (data.isFatherSideOn()) {
-            fatherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            fatherSideSwitch.setChecked(true);
+        }
+        fatherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -86,12 +92,13 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
         Switch motherSideSwitch = this.findViewById(R.id.settingMotherSideSwitch);
 
         if (data.isMotherSideOn()) {
-            motherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            motherSideSwitch.setChecked(true);
+        }
+        motherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -101,12 +108,13 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
         Switch maleEventSwitch = this.findViewById(R.id.settingMaleEventsSwitch);
 
         if (data.isMaleEventsOn()) {
-            maleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            maleEventSwitch.setChecked(true);
+        }
+        maleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -116,12 +124,13 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
         Switch femaleEventSwitch = this.findViewById(R.id.settingFemaleEventSwitch);
 
         if (data.isFemaleEventsOn()) {
-            femaleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            femaleEventSwitch.setChecked(true);
+        }
+        femaleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     if(isChecked) {
@@ -131,7 +140,6 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
             });
-        }
 
         RelativeLayout logoutLayout = this.findViewById(R.id.logoutButton);
         logoutLayout.setOnClickListener(new View.OnClickListener() {

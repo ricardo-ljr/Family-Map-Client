@@ -121,7 +121,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menu) {
-
+        super.onOptionsItemSelected(menu);
         switch(menu.getItemId()) {
             case R.id.searchMenuItem:
                 ((MainActivity) getActivity()).displaySearch();
@@ -130,7 +130,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 ((MainActivity) getActivity()).displaySettings();
                 return true;
             default:
-                return super.onOptionsItemSelected(menu);
+                return false;
         }
     }
 
