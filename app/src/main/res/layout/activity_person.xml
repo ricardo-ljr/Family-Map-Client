@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="First Name: "
+                android:text="@string/first_name"
                 android:paddingRight="3dp"/>
 
             <TextView
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Last Name: "
+                android:text="@string/last_name"
                 android:paddingRight="3dp"/>
 
             <TextView
@@ -84,7 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:text="Gender: "
+                android:text="@string/gender"
                 android:paddingRight="40dp"/>
 
             <TextView

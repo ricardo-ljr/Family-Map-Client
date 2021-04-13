@@ -24,7 +24,7 @@
                 android:id="@+id/lifeStoryLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Life Story Lines"
+                android:text="@string/life_story_lines"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="SHOW LIFE STORY LINES"
+                android:text="@string/show_life_story_lines"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/lifeStoryLines"/>
 
@@ -63,7 +63,7 @@
                 android:id="@+id/familyTreeLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Family Tree Lines"
+                android:text="@string/family_tree_lines"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="SHOW FAMILY TREE LINES"
+                android:text="@string/show_family_tree_lines"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/familyTreeLines"/>
 
@@ -102,7 +102,7 @@
                 android:id="@+id/spouseLines"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spouse Lines"
+                android:text="@string/spouse_lines"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="SHOW SPOUSE LINES"
+                android:text="@string/show_spouse_lines"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/spouseLines"/>
 
@@ -141,7 +141,7 @@
                 android:id="@+id/settingFatherSide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Father's Side"
+                android:text="@string/father_s_side"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="FILTER BY FATHER'S SIDE OF FAMILY"
+                android:text="@string/filter_by_father_s_side_of_family"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/settingFatherSide"/>
 
@@ -180,7 +180,7 @@
                 android:id="@+id/settingMotherSide"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mother's Side"
+                android:text="@string/mother_s_side"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -191,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="FILTER BY MOTHER'S SIDE OF FAMILY"
+                android:text="@string/filter_by_mother_s_side_of_family"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/settingMotherSide"/>
 
@@ -219,7 +219,7 @@
                 android:id="@+id/settingMaleEvents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Male Events"
+                android:text="@string/male_events"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -230,7 +230,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="FILTER EVENTS BASED ON GENDER"
+                android:text="@string/filter_events_based_on_gender"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/settingMaleEvents"/>
 
@@ -258,7 +258,7 @@
                 android:id="@+id/settingFemaleEvent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Female Events"
+                android:text="@string/female_events"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -269,7 +269,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="FILTER EVENTS BASED ON GENDER"
+                android:text="@string/filter_events_based_on_gender"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/settingFemaleEvent"/>
 
@@ -298,7 +298,7 @@
                 android:id="@+id/settingLogout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Logout"
+                android:text="@string/logout"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp" />
@@ -309,7 +309,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginStart="20dp"
-                android:text="RETURN TO LOGIN SCREEN"
+                android:text="@string/return_to_login_screen"
                 android:layout_marginLeft="20dp"
                 android:layout_below="@id/settingLogout"/>
 

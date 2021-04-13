@@ -39,14 +39,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Server Host:" />
+                        android:text="@string/server_host" />
 
                     <EditText
                         android:id="@+id/ServerHost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Server Host..." />
+                        android:hint="@string/server_host_hint" />
                 </TableRow>
 
                 <TableRow
@@ -57,14 +57,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Server Port: " />
+                        android:text="@string/server_port" />
 
                     <EditText
                         android:id="@+id/ServerPort"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Server Port..." />
+                        android:hint="@string/server_port_hint" />
                 </TableRow>
 
                 <TableRow
@@ -75,14 +75,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="User Name: " />
+                        android:text="@string/user_name" />
 
                     <EditText
                         android:id="@+id/UserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Username..." />
+                        android:hint="@string/username_hint" />
                 </TableRow>
 
                 <TableRow
@@ -93,7 +93,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Password: " />
+                        android:text="@string/password" />
 
                     <EditText
                         android:id="@+id/Password"
@@ -101,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Password..."/>
+                        android:hint="@string/password_hint"/>
                 </TableRow>
 
                 <TableRow
@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="First Name: " />
+                        android:text="@string/first_name_login" />
 
                     <EditText
                         android:id="@+id/FirstName"
@@ -120,7 +120,7 @@
                         android:layout_height="wrap_content"
 
                         android:ems="10"
-                        android:hint="First Name..." />
+                        android:hint="@string/first_name_login_hint" />
                 </TableRow>
 
                 <TableRow
@@ -131,14 +131,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Last Name: " />
+                        android:text="@string/last_name_login" />
 
                     <EditText
                         android:id="@+id/LastName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Last Name..." />
+                        android:hint="@string/last_name_login_hint" />
                 </TableRow>
 
                 <TableRow
@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Email: " />
+                        android:text="@string/email_login" />
 
                     <EditText
                         android:id="@+id/Email"
@@ -157,14 +157,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
-                        android:hint="Email..." />
+                        android:hint="@string/email_login_hint" />
                 </TableRow>
                 <TableRow>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Gender: " />
+                        android:text="@string/gender_login" />
 
                     <RadioGroup
                         android:id="@+id/Gender"
@@ -176,13 +176,13 @@
                             android:id="@+id/MaleButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="M"/>
+                            android:text="@string/m_login"/>
 
                         <RadioButton
                             android:id="@+id/FemaleButton"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="F" />
+                            android:text="@string/f_login" />
                     </RadioGroup>
                 </TableRow>
             </TableLayout>
@@ -198,7 +198,7 @@
                     android:layout_width="20dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
-                    android:text="Sign In"
+                    android:text="@string/sign_in_login_fragment"
                     android:textSize="15dp" />
 
                 <Button
@@ -207,7 +207,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
                     android:textSize="15dp"
-                    android:text="Register" />
+                    android:text="@string/register_login_fragment" />
 
             </LinearLayout>
 
