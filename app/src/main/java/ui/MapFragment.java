@@ -167,8 +167,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 MarkerOptions options = new MarkerOptions().position(location);
 
                 // Select random color for any other event not mentioned above
-                float[] color = new float[] {BitmapDescriptorFactory.HUE_GREEN, BitmapDescriptorFactory.HUE_CYAN,
-                                            BitmapDescriptorFactory.HUE_ROSE, BitmapDescriptorFactory.HUE_MAGENTA,
+                float[] color = new float[] { BitmapDescriptorFactory.HUE_CYAN,
                                             BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_ORANGE,
                                             BitmapDescriptorFactory.HUE_AZURE,BitmapDescriptorFactory.HUE_VIOLET};
 
