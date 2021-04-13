@@ -12,9 +12,11 @@ import AsyncTasks.ClearTask;
 import Request.LoginRequest;
 import Request.RegisterRequest;
 import Result.LoginResult;
+import Result.PersonsResult;
 import Result.RegisterResult;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 public class ServerProxyText {
@@ -236,6 +238,130 @@ public class ServerProxyText {
         }
 
         assertEquals(compareTest, "Error in ServerProxy when logging in");
+    }
+
+    /*********************************** RETRIEVING PEOPLE RELATED TO A LOGGED IN/REGISTER USER  ***********************************/
+
+    @Test
+    public void retrievePeople() {
+        // register user first
+
+        userName = "sheila";
+        password = "parker";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                String authtoken = res.getAuthToken();
+
+                URL personUrl = new URL("http://" + host + ":" + port + "/person");
+
+                PersonsResult personRes = proxy.persons(personUrl, authtoken);
+
+                compareTest = res.getMessage();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Filling in all the lists with people
+        assertNotNull(DataCache.getInstance().getPeople());
 
     }
+
+    // Registering new user and retrieving people for new user
+    @Test
+    public void retrievePeople2() {
+        // register user first
+
+        userName = "new";
+        password = "user";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                String authtoken = res.getAuthToken();
+
+                URL personUrl = new URL("http://" + host + ":" + port + "/person");
+
+                PersonsResult personRes = proxy.persons(personUrl, authtoken);
+
+                compareTest = res.getMessage();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        assertNotNull(DataCache.getInstance().getPaternalAncestorsFemales());
+        assertNotNull(DataCache.getInstance().getMaternalAncestorsFemales());
+        assertNotNull(DataCache.getInstance().getChildrenMap());
+    }
+
+
 }
