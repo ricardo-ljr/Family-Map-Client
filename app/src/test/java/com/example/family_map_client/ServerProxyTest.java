@@ -20,7 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class ServerProxyText {
+public class ServerProxyTest {
 
 //    Write JUnit tests to verify that your Server Proxy class works correctly. You should have tests for the following functionality:
 //    Login method
