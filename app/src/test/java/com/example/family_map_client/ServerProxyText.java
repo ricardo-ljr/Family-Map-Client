@@ -9,7 +9,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import AsyncTasks.ClearTask;
+import Request.LoginRequest;
 import Request.RegisterRequest;
+import Result.LoginResult;
 import Result.RegisterResult;
 
 import static org.junit.Assert.assertEquals;
@@ -76,7 +78,7 @@ public class ServerProxyText {
 
             RegisterResult res = proxy.register(url, request);
 
-            if(res.getMessage() == null) {
+            if (res.getMessage() == null) {
                 compareTest = res.getUsername();
             } else {
                 compareTest = res.getMessage();
@@ -115,7 +117,7 @@ public class ServerProxyText {
             RegisterResult res = proxy.register(url, request);
             RegisterResult res2 = proxy.register(url, request);
 
-            if(res.getMessage() == null) {
+            if (res.getMessage() == null) {
                 compareTest = res2.getUsername();
             } else {
                 compareTest = res2.getMessage();
@@ -128,5 +130,112 @@ public class ServerProxyText {
     }
 
 
+    /***************************************************** LOGIN TESTS *****************************************************/
 
+    @Test
+    public void login() {
+        // register user first
+
+        userName = "sheila";
+        password = "parker";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                compareTest = res.getUsername();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(compareTest, userName);
+
+    }
+
+    // Logins with the wrong username and password after registering
+    @Test
+    public void loginFails() {
+        // register user first
+
+        userName = "sheila";
+        password = "parker";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName("SHE");
+            request.setPassword("12345");
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                compareTest = res.getUsername();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        assertEquals(compareTest, "Error in ServerProxy when logging in");
+
+    }
 }
