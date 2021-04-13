@@ -11,6 +11,7 @@ import java.net.URL;
 import AsyncTasks.ClearTask;
 import Request.LoginRequest;
 import Request.RegisterRequest;
+import Result.EventsResult;
 import Result.LoginResult;
 import Result.PersonsResult;
 import Result.RegisterResult;
@@ -363,5 +364,127 @@ public class ServerProxyText {
         assertNotNull(DataCache.getInstance().getChildrenMap());
     }
 
+    /*********************************** RETRIEVING EVENTS RELATED TO A LOGGED IN/REGISTER USER  ***********************************/
 
+    @Test
+    public void retrieveEvents() {
+        // register user first
+
+        userName = "sheila";
+        password = "parker";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                String authtoken = res.getAuthToken();
+
+                URL eventUrl = new URL("http://" + host + ":" + port + "/event");
+
+                EventsResult eventsResult = proxy.events(eventUrl, authtoken);
+
+                compareTest = res.getMessage();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Filling in all the lists with events
+        assertNotNull(DataCache.getInstance().getEvents());
+    }
+
+    @Test
+    public void retrieveEvents2() {
+        // register user first
+
+        userName = "new";
+        password = "user";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/login");
+
+            LoginRequest request = new LoginRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+
+            LoginResult res = proxy.login(url, request);
+
+            if (res.getMessage() == null) {
+                String authtoken = res.getAuthToken();
+
+                URL eventUrl = new URL("http://" + host + ":" + port + "/event");
+
+                EventsResult eventsResult = proxy.events(eventUrl, authtoken);
+
+                compareTest = res.getMessage();
+            } else {
+                compareTest = res.getMessage();
+            }
+
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        // Filling in all the lists with events
+
+        assertNotNull(DataCache.getInstance().getEvents());
+        assertNotNull(DataCache.getInstance().getCurrentPersonEvents());
+        assertNotNull(DataCache.getInstance().getPersonEvents());
+        assertNotNull(DataCache.getInstance().getEventTypes());
+    }
 }
