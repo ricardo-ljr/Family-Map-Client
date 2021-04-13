@@ -80,7 +80,7 @@ public class DataCache {
     private boolean isSpouseLinesOn = true;
     private boolean isFatherSideOn = true;
     private boolean isMotherSideOn = true;
-    private boolean isMaleEventsOn = false;
+    private boolean isMaleEventsOn = true;
     private boolean isFemaleEventsOn = true;
 
 

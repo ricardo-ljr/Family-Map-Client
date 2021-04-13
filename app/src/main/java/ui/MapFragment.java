@@ -55,6 +55,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private View view;
     private String selectedPerson = new String();
+    boolean mapLoaded = false;
 
     private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
 
@@ -65,7 +66,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void setSelectedPerson(String selectedPerson) {
         this.selectedPerson = selectedPerson;
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             menu.findItem(R.id.searchMenuItem).setIcon(search_icon);
         }
     }
+
+
 
     // This function was breaking my map and lost me 8 hours of work ( * facepalm * )
 //    @Override
@@ -349,12 +351,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         return newLatLng;
     }
 
-//    @Override
-//    public void onMapLoaded() {
-//        // You probably don't need this callback. It occurs after onMapReady and I have seen
-//        // cases where you get an error when adding markers or otherwise interacting with the map in
-//        // onMapReady(...) because the map isn't really all the way ready. If you see that, just
-//        // move all code where you interact with the map (everything after
-//        // map.setOnMapLoadedCallback(...) above) to here.
-//    }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if(DataCache.getInstance().isLoggedIn()) {
+            if(map != null) {
+                map.clear();
+                onMapReady(map);
+            }
+        }
+
+    }
 }
