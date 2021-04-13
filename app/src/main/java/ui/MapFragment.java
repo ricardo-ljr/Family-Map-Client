@@ -158,6 +158,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             float birthColor = BitmapDescriptorFactory.HUE_GREEN;
             float marriageColor = BitmapDescriptorFactory.HUE_MAGENTA;
             float deathColor = BitmapDescriptorFactory.HUE_ROSE;
+            float asteroidColor = BitmapDescriptorFactory.HUE_YELLOW;
 
             for (int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
                 Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
@@ -177,6 +178,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     options.icon(BitmapDescriptorFactory.defaultMarker(marriageColor));
                 } else if (currEvent.getEventType().equals("death")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(deathColor));
+                } else if(currEvent.getEventType().toLowerCase().equals("completed asteroids")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(asteroidColor));
                 } else {
                     Random random = new Random();
                     int randomColor = random.nextInt(color.length - 1);
@@ -187,6 +190,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             }
         }
 
+        // setMarkerListener to (this)
+        // Copy code over to it and call
         map.setOnMarkerClickListener(new OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -355,11 +360,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         super.onResume();
 
         if(DataCache.getInstance().isLoggedIn()) {
-            if(map != null) {
+            if(map != null) { // create a click event on marker
                 map.clear();
                 onMapReady(map);
             }
         }
-
     }
 }

@@ -40,6 +40,7 @@ public class EventActivity extends AppCompatActivity {
         }
     }
 
+    // Ending event activity and returning to map
     @Override
     protected void onPause(){
         super.onPause();

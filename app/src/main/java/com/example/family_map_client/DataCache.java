@@ -362,6 +362,8 @@ public class DataCache {
                         if (currEvent.getYear() < eventList.get(0).getYear()) {
                             eventList.add(0, currEvent);
                         } else if (currEvent.getYear() >= eventList.get(eventList.size() - 1).getYear()) {
+                            eventList.add(currEvent);
+                        } else {
                             for (int j = 0; j < eventList.size() - 1; j++) {
                                 if(eventList.get(j).getYear() <= currEvent.getYear() && eventList.get(j + 1).getYear() > currEvent.getYear()) {
                                     eventList.add(j + 1, currEvent);
