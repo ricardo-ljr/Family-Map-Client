@@ -166,6 +166,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 MarkerOptions options = new MarkerOptions().position(location);
 
+                // Select random color for any other event not mentioned above
                 float[] color = new float[] {BitmapDescriptorFactory.HUE_GREEN, BitmapDescriptorFactory.HUE_CYAN,
                                             BitmapDescriptorFactory.HUE_ROSE, BitmapDescriptorFactory.HUE_MAGENTA,
                                             BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_ORANGE,
@@ -198,7 +199,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 if(!data.isPersonOrSearch()) {
                     data.setStartLocation(marker.getPosition());
                 }
-
                 clickMarker(marker);
                 return false;
             }
@@ -273,7 +273,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if(data.getCurrentPersonEvents().containsKey(selectedPerson.getSpouseID())) {
 
                 LatLng dest = getLatLng(selectedPerson.getSpouseID(), 0);
-                addPolyline(src, dest, Color.YELLOW, currentWidth); // spouse line
+                addPolyline(src, dest, Color.MAGENTA, currentWidth); // spouse line
             }
         }
 
@@ -293,7 +293,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if(data.getCurrentPersonEvents().containsKey(selectedPerson.getFatherID())) {
 
                 LatLng dest = getLatLng(selectedPerson.getFatherID(), 0);
-                addPolyline(src, dest, Color.GREEN, currentWidth);
+                addPolyline(src, dest, Color.BLUE, currentWidth);
 
                 Person father = data.getPeople().get(selectedPerson.getFatherID());
                 drawParentLines(dest, father, currentWidth);
@@ -302,7 +302,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if(data.getCurrentPersonEvents().containsKey(selectedPerson.getMotherID())) {
 
                 LatLng dest = getLatLng(selectedPerson.getMotherID(), 0);
-                addPolyline(src, dest, Color.GREEN, currentWidth);
+                addPolyline(src, dest, Color.BLUE, currentWidth);
 
                 Person mother = data.getPeople().get(selectedPerson.getMotherID());
                 drawParentLines(dest, mother, currentWidth);
@@ -310,6 +310,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    // Make lines thinner on parent family lines
     public void drawParentLines(LatLng src, Person person, int currentWidth) {
         DataCache data = DataCache.getInstance();
 
@@ -319,7 +320,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         if(data.getCurrentPersonEvents().containsKey(person.getFatherID())) {
             LatLng dest = getLatLng(person.getFatherID(), 0);
-            addPolyline(src, dest, Color.GREEN, currentWidth);
+            addPolyline(src, dest, Color.BLUE, currentWidth);
 
             Person father = data.getPeople().get(person.getFatherID());
             drawParentLines(dest, father, currentWidth);
@@ -327,7 +328,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         if(data.getCurrentPersonEvents().containsKey(person.getMotherID())) {
             LatLng dest = getLatLng(person.getMotherID(), 0);
-            addPolyline(src, dest, Color.GREEN, currentWidth);
+            addPolyline(src, dest, Color.BLUE, currentWidth);
 
             Person mother = data.getPeople().get(person.getMotherID());
             drawParentLines(dest, mother, currentWidth);

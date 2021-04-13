@@ -10,8 +10,6 @@ import android.widget.Switch;
 import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.family_map_client.BuildConfig;
 import com.example.family_map_client.DataCache;
 import com.example.family_map_client.MainActivity;
 import com.example.family_map_client.R;
@@ -26,9 +24,11 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Family Map Switch Settings:
 
-        Switch lifeStoryLinesSwitch = (Switch) findViewById(R.id.lifeStoryLinesSwitch);
+        Switch lifeStoryLinesSwitch = this.findViewById(R.id.lifeStoryLinesSwitch);
 
         if (data.isLifeStoryLinesOn()) {
             lifeStoryLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -43,7 +43,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch familyTreeLinesSwitch = (Switch) findViewById(R.id.familyTreeLinesSwitch);
+        Switch familyTreeLinesSwitch = this.findViewById(R.id.familyTreeLinesSwitch);
 
         if (data.isFamilyTreeLinesOn()) {
             familyTreeLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
 
-        Switch spouseLinesSwitch = (Switch) findViewById(R.id.spouseLinesSwitch);
+        Switch spouseLinesSwitch = this.findViewById(R.id.spouseLinesSwitch);
 
         if (data.isSpouseLinesOn()) {
             spouseLinesSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -74,7 +74,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch fatherSideSwitch = (Switch) findViewById(R.id.settingFatherSideSwitch);
+        Switch fatherSideSwitch = this.findViewById(R.id.settingFatherSideSwitch);
 
         if (data.isFatherSideOn()) {
             fatherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -89,7 +89,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch motherSideSwitch = (Switch) findViewById(R.id.settingMotherSideSwitch);
+        Switch motherSideSwitch = this.findViewById(R.id.settingMotherSideSwitch);
 
         if (data.isMotherSideOn()) {
             motherSideSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -104,7 +104,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch maleEventSwitch = (Switch) findViewById(R.id.settingMaleEventsSwitch);
+        Switch maleEventSwitch = this.findViewById(R.id.settingMaleEventsSwitch);
 
         if (data.isMaleEventsOn()) {
             maleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -119,7 +119,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        Switch femaleEventSwitch = (Switch) findViewById(R.id.settingFemaleEventSwitch);
+        Switch femaleEventSwitch = this.findViewById(R.id.settingFemaleEventSwitch);
 
         if (data.isFemaleEventsOn()) {
             femaleEventSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -134,7 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
         }
 
-        RelativeLayout logoutLayout = (RelativeLayout) findViewById(R.id.logoutButton);
+        RelativeLayout logoutLayout = this.findViewById(R.id.logoutButton);
         logoutLayout.setOnClickListener(new View.OnClickListener() {
 
             @Override

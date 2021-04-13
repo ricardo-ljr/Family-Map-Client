@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -14,6 +15,7 @@ import JSONReader.ReadWrite;
 import JSONReader.Serializer;
 import Request.LoginRequest;
 import Request.RegisterRequest;
+import Result.ClearResult;
 import Result.EventsResult;
 import Result.LoginResult;
 import Result.PersonsResult;
@@ -228,4 +230,48 @@ public class ServerProxy {
         return eventsResult;
     }
 
+    /**
+     * Clear function to clear database when testing
+     *
+     * @return
+     */
+    public ClearResult clear(String host, String port) throws IOException {
+
+        ClearResult clearResult = new ClearResult();
+
+        try {
+
+            URL url = new URL("http://" + host + ":" + port +"/clear");
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+
+            http.setRequestMethod("POST");
+            http.setDoOutput(false); // there is no request body
+            http.addRequestProperty("Accept", "application/json");
+
+            http.connect();
+
+            if(http.getResponseCode() == HttpURLConnection.HTTP_OK) {
+
+                InputStream resBody = http.getInputStream(); // parse JSON data out of the response body
+
+                String reqData = ReadWrite.readString(resBody);
+
+                clearResult = Deserializer.deserialize(reqData, ClearResult.class);
+
+                http.getInputStream().close();
+
+                return clearResult;
+            } else {
+                System.out.println("Error in clear proxy");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        clearResult.setSuccess(false);
+        clearResult.setMessage("Error in ServerProxy when clearing");
+        return clearResult;
+    }
 }
+
