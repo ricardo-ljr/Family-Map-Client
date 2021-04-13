@@ -13,6 +13,7 @@ import Request.RegisterRequest;
 import Result.RegisterResult;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ServerProxyText {
 
@@ -46,6 +47,8 @@ public class ServerProxyText {
         DataCache.getInstance().logout();
 
     }
+
+    /***************************************************** REGISTER TESTS *****************************************************/
 
     @Test
     public void register() {
@@ -84,5 +87,46 @@ public class ServerProxyText {
 
         assertEquals(compareTest, userName);
     }
+
+    // Tries to register the same user again and it fails
+    @Test
+    public void registerFails() {
+        userName = "sheila";
+        password = "parker";
+        firstName = "Sheila";
+        lastName = "Parker";
+        email = "sheila@email.com";
+        gender = "f";
+
+        ServerProxy proxy = new ServerProxy();
+
+        try {
+            URL url = new URL("http://" + host + ":" + port + "/user/register");
+
+            RegisterRequest request = new RegisterRequest();
+            request.setUserName(userName);
+            request.setPassword(password);
+            request.setFirstName(firstName);
+            request.setLastName(lastName);
+            request.setEmail(email);
+            request.setGender(gender);
+
+
+            RegisterResult res = proxy.register(url, request);
+            RegisterResult res2 = proxy.register(url, request);
+
+            if(res.getMessage() == null) {
+                compareTest = res2.getUsername();
+            } else {
+                compareTest = res2.getMessage();
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        assertNull(compareTest);
+    }
+
+
 
 }
