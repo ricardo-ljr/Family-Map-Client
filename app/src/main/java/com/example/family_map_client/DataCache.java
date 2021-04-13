@@ -80,7 +80,7 @@ public class DataCache {
     private boolean isSpouseLinesOn = true;
     private boolean isFatherSideOn = true;
     private boolean isMotherSideOn = true;
-    private boolean isMaleEventsOn = true;
+    private boolean isMaleEventsOn = false;
     private boolean isFemaleEventsOn = true;
 
 
@@ -475,7 +475,7 @@ public class DataCache {
 
             Person spouse = people.get(user.getSpouseID());
 
-            if(spouse.getGender().equals('m')) {
+            if(spouse.getGender().equals("m")) {
                 maleSpouse.add(spouse.getPersonID());
             } else {
                 femaleSpouse.add(spouse.getPersonID());
@@ -503,6 +503,7 @@ public class DataCache {
         if(isMaleEventsOn && isFatherSideOn) {
             currentPeopleList.addAll(paternalAncestorsMales);
         }
+
         if(isFemaleEventsOn && isMotherSideOn) {
             currentPeopleList.addAll(paternalAncestorsFemales);
         }

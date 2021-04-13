@@ -154,10 +154,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         for(String key : data.getCurrentPersonEvents().keySet()) {
             float birthColor = BitmapDescriptorFactory.HUE_GREEN;
-            float baptismColor = BitmapDescriptorFactory.HUE_CYAN;
             float marriageColor = BitmapDescriptorFactory.HUE_MAGENTA;
             float deathColor = BitmapDescriptorFactory.HUE_ROSE;
-
 
             for (int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
                 Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
@@ -174,8 +172,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
                 if (currEvent.getEventType().equals("birth")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(birthColor));
-                } else if (currEvent.getEventType().equals("baptism")) {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(baptismColor));
                 } else if (currEvent.getEventType().equals("marriage")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(marriageColor));
                 } else if (currEvent.getEventType().equals("death")) {
@@ -185,7 +181,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     int randomColor = random.nextInt(color.length - 1);
                     options.icon(BitmapDescriptorFactory.defaultMarker(color[randomColor]));
                 }
-
 
                 map.addMarker(options).setTag(currEvent);
             }
