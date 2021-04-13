@@ -216,9 +216,9 @@ public class SearchActivity extends AppCompatActivity {
         for(String key : data.getCurrentPersonEvents().keySet()) {
             Person person = data.getPeople().get(key);
 
-            if(person.getFirstName().toLowerCase().contains(query) || person.getLastName().toLowerCase().contains(query)) {
-                eventList.addAll(data.getCurrentPersonEvents().get(key));
-            } else {
+//            if(person.getFirstName().toLowerCase().contains(query) || person.getLastName().toLowerCase().contains(query)) {
+//                eventList.addAll(data.getCurrentPersonEvents().get(key));
+//            } else {
                 for(int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
                     Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
 
@@ -233,7 +233,7 @@ public class SearchActivity extends AppCompatActivity {
                     }
                 }
             }
-        }
+//        }
 
         return eventList;
     }
