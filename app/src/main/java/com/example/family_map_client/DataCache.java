@@ -700,6 +700,7 @@ public class DataCache {
         maternalAncestorsFemales.clear();
     }
 
+    // Testing methods for reloading map after finishing an activity
     public Marker getMarker() {
         return marker;
     }
