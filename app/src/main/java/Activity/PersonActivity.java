@@ -217,6 +217,7 @@ public class PersonActivity extends AppCompatActivity {
                     DataCache data = DataCache.getInstance();
                     data.setPersonOrSearch(true);
                     String eventID = eventArrayList.get(childPosition).getEventID();
+                    data.setEventID(eventID);
                     Intent intent = new Intent(getApplicationContext(), EventActivity.class);
                     intent.putExtra("eventID", eventID);
                     startActivity(intent);

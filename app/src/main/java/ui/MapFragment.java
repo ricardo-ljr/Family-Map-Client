@@ -27,6 +27,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -40,6 +41,8 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import Activity.PersonActivity;
@@ -55,9 +58,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap map;
     private View view;
     private String selectedPerson = new String();
-    boolean mapLoaded = false;
+    private boolean drawLines = false;
 
     private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
+    private ArrayList<Marker> markers = new ArrayList<>();
 
     public String getSelectedPerson() {
         return selectedPerson;
@@ -146,16 +150,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             map.moveCamera(CameraUpdateFactory.newLatLng(data.getStartLocation()));
         }
 
-        if(data.isPersonOrSearch()) {
-            float latitude = data.getEvents().get(data.getEventID()).getLatitude();
-            float longitute = data.getEvents().get(data.getEventID()).getLongitude();
-            float zoomLevel = 4.0f;
-            LatLng latLng = new LatLng(latitude, longitute);
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
-        }
-
         for(String key : data.getCurrentPersonEvents().keySet()) {
             float birthColor = BitmapDescriptorFactory.HUE_GREEN;
+            float baptism = BitmapDescriptorFactory.HUE_BLUE;
             float marriageColor = BitmapDescriptorFactory.HUE_MAGENTA;
             float deathColor = BitmapDescriptorFactory.HUE_ROSE;
             float asteroidColor = BitmapDescriptorFactory.HUE_YELLOW;
@@ -168,12 +165,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 MarkerOptions options = new MarkerOptions().position(location);
 
                 // Select random color for any other event not mentioned above
-                float[] color = new float[] { BitmapDescriptorFactory.HUE_CYAN,
-                                            BitmapDescriptorFactory.HUE_BLUE, BitmapDescriptorFactory.HUE_ORANGE,
-                                            BitmapDescriptorFactory.HUE_AZURE,BitmapDescriptorFactory.HUE_VIOLET};
 
                 if (currEvent.getEventType().equals("birth")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(birthColor));
+                } else if(currEvent.getEventType().equals("baptism")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(baptism));
                 } else if (currEvent.getEventType().equals("marriage")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(marriageColor));
                 } else if (currEvent.getEventType().equals("death")) {
@@ -181,17 +177,27 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 } else if(currEvent.getEventType().toLowerCase().equals("completed asteroids")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(asteroidColor));
                 } else {
-                    Random random = new Random();
-                    int randomColor = random.nextInt(color.length - 1);
-                    options.icon(BitmapDescriptorFactory.defaultMarker(color[randomColor]));
+                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
                 }
 
-                map.addMarker(options).setTag(currEvent);
+                Marker marker = map.addMarker(options);
+                marker.setTag(currEvent);
+                markers.add(marker);
+
+                // setMarkerListener to (this)
+                // Copy code over to it and call
+                // if marker is set to true, than draw polylines as well
             }
         }
 
-        // setMarkerListener to (this)
-        // Copy code over to it and call
+        if(data.isPersonOrSearch()) {
+            float latitude = data.getEvents().get(data.getEventID()).getLatitude();
+            float longitute = data.getEvents().get(data.getEventID()).getLongitude();
+            float zoomLevel = 4.0f;
+            LatLng latLng = new LatLng(latitude, longitute);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+        }
+
         map.setOnMarkerClickListener(new OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -201,6 +207,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     data.setStartLocation(marker.getPosition());
                 }
                 clickMarker(marker);
+                data.setMarker(marker);
                 return false;
             }
         });
@@ -212,10 +219,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), PersonActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("personID", getSelectedPerson());
                 startActivity(intent);
             }
         });
+
+        UiSettings uiSettings = map.getUiSettings();
+        uiSettings.setAllGesturesEnabled(true);
+        uiSettings.setZoomControlsEnabled(true);
     }
 
     /**
@@ -234,6 +246,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         Event event = (Event) marker.getTag();
         Person person = data.getPeople().get(event.getPersonID());
         setSelectedPerson(person.getPersonID());
+        data.setEventID(event.getEventID());
 
         String fullname = person.getFirstName() + " " + person.getLastName();
         String eventDescription = event.getEventType().toUpperCase();
@@ -268,7 +281,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void drawPolyLines(LatLng src, Person selectedPerson) {
 
         DataCache data = DataCache.getInstance();
-        int currentWidth = 16;
+        int currentWidth = 20;
 
         if(data.isSpouseLinesOn()) {
             if(data.getCurrentPersonEvents().containsKey(selectedPerson.getSpouseID())) {
@@ -359,11 +372,72 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onResume() {
         super.onResume();
 
-        if(DataCache.getInstance().isLoggedIn()) {
+        DataCache data = DataCache.getInstance();
+        if(data.isLoggedIn()) {
             if(map != null) { // create a click event on marker
-                map.clear();
                 onMapReady(map);
+                reDrawMapOnReload();
             }
         }
+    }
+
+    private void reDrawMapOnReload() {
+        DataCache data = DataCache.getInstance();
+
+        for(Marker m: markers) {
+            m.remove();
+        }
+        markers.clear();
+
+        // Re-add markers
+        for(String key : data.getCurrentPersonEvents().keySet()) {
+            float birthColor = BitmapDescriptorFactory.HUE_GREEN;
+            float baptism = BitmapDescriptorFactory.HUE_BLUE;
+            float marriageColor = BitmapDescriptorFactory.HUE_MAGENTA;
+            float deathColor = BitmapDescriptorFactory.HUE_ROSE;
+            float asteroidColor = BitmapDescriptorFactory.HUE_YELLOW;
+
+            for (int i = 0; i < data.getCurrentPersonEvents().get(key).size(); i++) {
+                Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
+
+                LatLng location = new LatLng(currEvent.getLatitude(), currEvent.getLongitude());
+
+                MarkerOptions options = new MarkerOptions().position(location);
+
+                // Select random color for any other event not mentioned above
+
+                if (currEvent.getEventType().equals("birth")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(birthColor));
+                } else if(currEvent.getEventType().equals("baptism")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(baptism));
+                } else if (currEvent.getEventType().equals("marriage")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(marriageColor));
+                } else if (currEvent.getEventType().equals("death")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(deathColor));
+                } else if(currEvent.getEventType().toLowerCase().equals("completed asteroids")) {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(asteroidColor));
+                } else {
+                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                }
+
+                Marker marker = map.addMarker(options);
+                marker.setTag(currEvent);
+                markers.add(marker);
+
+                // setMarkerListener to (this)
+                // Copy code over to it and call
+                // if marker is set to true, than draw polylines as well
+            }
+        }
+
+        for (Marker m: markers) {
+            if (m.getTag() == data.getMarker()) {
+                clickMarker(m);
+            }
+        }
+
+
+        // match marker tag with clicked event in order to preserve polylines
+
     }
 }

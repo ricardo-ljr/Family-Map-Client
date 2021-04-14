@@ -1,6 +1,7 @@
 package com.example.family_map_client;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -90,6 +91,9 @@ public class DataCache {
     private String eventID = new String();
     private boolean personOrSearch = false; // keeps track if it's coming from person or search activity and updated map accordingly
     private LatLng startLocation = new LatLng(-34, 151);
+    private Marker marker = null;
+
+
 
 
     public String getAuthtoken() {
@@ -696,4 +700,11 @@ public class DataCache {
         maternalAncestorsFemales.clear();
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
 }
