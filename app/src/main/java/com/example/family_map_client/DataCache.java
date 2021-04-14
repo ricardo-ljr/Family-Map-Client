@@ -707,4 +707,14 @@ public class DataCache {
     public void setMarker(Marker marker) {
         this.marker = marker;
     }
+
+    public Person getPersonForEventActivity(String personID) {
+        Person person = people.get(personID);
+        return person;
+    }
+
+    public Event getEventForEventActivity(String eventID) {
+        Event event = events.get(eventID);
+        return event;
+    }
 }

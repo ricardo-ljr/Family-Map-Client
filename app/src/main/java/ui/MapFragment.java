@@ -211,6 +211,33 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             float zoomLevel = 4.0f;
             LatLng latLng = new LatLng(latitude, longitute);
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+
+            Event event = data.getEventForEventActivity(data.getEventID());
+            Person person = data.getPeople().get(event.getPersonID());
+
+            String fullname = person.getFirstName() + " " + person.getLastName();
+            String eventDescription = event.getEventType().toUpperCase();
+            String timePlace = event.getCity() + ", " + event.getCountry() + " (" + event.getYear() + ")";
+
+            ImageView icon = view.findViewById(R.id.iconImage);
+            TextView textName = view.findViewById(R.id.EventPerson);
+            TextView textDescription1 = view.findViewById(R.id.EventType);
+            TextView textDescription2 =  view.findViewById(R.id.EventTimePlace);
+
+            if(person.getGender().equals("m")) {
+                Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_male).colorRes(R.color.blue).sizeDp(40);
+                icon.setImageDrawable(genderIcon);
+            } else {
+                Drawable genderIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_female).colorRes(R.color.pink).sizeDp(40);
+                icon.setImageDrawable(genderIcon);
+            }
+
+            textName.setText(fullname);
+            textDescription1.setText(eventDescription);
+            textDescription2.setText(timePlace);
+
+            setPersonToDraw(person);
+            drawPolyLines(latLng ,person);
         }
 
         map.setOnMarkerClickListener(new OnMarkerClickListener() {
