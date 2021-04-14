@@ -60,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             });
 
-
         Switch spouseLinesSwitch = findViewById(R.id.spouseLinesSwitch);
 
         if (data.isSpouseLinesOn()) {

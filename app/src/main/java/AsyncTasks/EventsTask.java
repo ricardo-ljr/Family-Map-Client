@@ -26,7 +26,6 @@ public class EventsTask extends AsyncTask<String, Void, EventsResult> {
         this.context = cont;
     }
 
-
     @Override
     protected EventsResult doInBackground(String... authtoken) {
 
