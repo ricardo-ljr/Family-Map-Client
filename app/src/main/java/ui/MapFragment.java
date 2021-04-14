@@ -3,7 +3,6 @@ package ui;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.graphics.fonts.Font;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,7 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.family_map_client.DataCache;
@@ -28,7 +26,6 @@ import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -41,24 +38,18 @@ import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 import Activity.PersonActivity;
-import Activity.SearchActivity;
-import Activity.SettingsActivity;
-import AsyncTasks.FamilyData;
 import Model.Event;
 import Model.Person;
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
-    public static String ARG_EVENT_ID;
     private GoogleMap map;
     private View view;
     private String selectedPerson = new String();
-    private boolean drawLines = false;
+    private boolean drawLines = false; // keeps track whether lines need to be drawn or not
 
     public void setPersonToDraw(Person personToDraw) {
         this.personToDraw = personToDraw;
@@ -126,7 +117,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
 
-
     // This function was breaking my map and lost me 8 hours of work ( * facepalm * )
 //    @Override
 //    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -159,7 +149,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         DataCache data = DataCache.getInstance();
         map = googleMap;
 
-        data.isCurrentEventOn(); // populating events based on settings activity
+        data.isCurrentSettingOn(); // populating events based on settings activity
 
         if(!data.isPersonOrSearch()) {
             map.moveCamera(CameraUpdateFactory.newLatLng(data.getStartLocation()));
@@ -176,6 +166,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 Event currEvent = data.getCurrentPersonEvents().get(key).get(i);
 
                 LatLng location = new LatLng(currEvent.getLatitude(), currEvent.getLongitude());
+                float[] color = {BitmapDescriptorFactory.HUE_VIOLET, BitmapDescriptorFactory.HUE_ORANGE, BitmapDescriptorFactory.HUE_CYAN};
 
                 MarkerOptions options = new MarkerOptions().position(location);
 
@@ -192,8 +183,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 } else if(currEvent.getEventType().toLowerCase().equals("completed asteroids")) {
                     options.icon(BitmapDescriptorFactory.defaultMarker(asteroidColor));
                 } else {
-                    options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+                    Random randomColor = new Random();
+                    int random = randomColor.nextInt( color.length - 1);
+                    options.icon(BitmapDescriptorFactory.defaultMarker(color[random]));
                 }
+
 
                 Marker marker = map.addMarker(options);
                 marker.setTag(currEvent);
@@ -425,6 +419,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         }
     }
 
+    /********* Functions to reload current map state after leaving an activity or changing settings *********/
+
     private void reDrawMapOnReload() {
         DataCache data = DataCache.getInstance();
 
@@ -485,6 +481,5 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         drawPolyLines(data.getMarker().getPosition(), getPersonToDraw());
     }
-
 
 }

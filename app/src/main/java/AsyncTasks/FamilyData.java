@@ -28,9 +28,7 @@ public class FamilyData extends AsyncTask<String, Integer, PersonsResult> {
         this.context = cont;
     }
 
-    public FamilyData() {
-
-    }
+    public FamilyData() { }
 
     @Override
     protected PersonsResult doInBackground(String... authtoken) {

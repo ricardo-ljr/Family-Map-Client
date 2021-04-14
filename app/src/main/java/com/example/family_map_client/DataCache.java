@@ -27,7 +27,6 @@ public class DataCache {
         if (instance == null) {
             instance = new DataCache();
         }
-
         return instance;
     }
 
@@ -94,7 +93,7 @@ public class DataCache {
     private Marker marker = null;
 
 
-
+    /******** General Getter and Setters used across the application ********/
 
     public String getAuthtoken() {
         return authtoken;
@@ -331,31 +330,30 @@ public class DataCache {
 
         setEventID(event[0].getEventID());
 
-        //Store temp keys as EventID for later use to put it all in order
-        Map<String, ArrayList<Event>> tempEvent = new HashMap<>();
+        //Store keys as EventID for later use to put it all in order
+        Map<String, ArrayList<Event>> listMap = new HashMap<>();
 
         for (int i = 0; i < event.length; i++) {
 
             events.put(event[i].getEventID(), event[i]);
             eventTypes.add(event[i].getEventType().toLowerCase());
 
-            if(!tempEvent.containsKey(event[i].getPersonID())) {
+            if(!listMap.containsKey(event[i].getPersonID())) {
                 ArrayList<Event> newEventList = new ArrayList<>();
-                tempEvent.put(event[i].getPersonID(), newEventList);
+                listMap.put(event[i].getPersonID(), newEventList);
             }
-
-            tempEvent.get(event[i].getPersonID()).add(event[i]);
+            listMap.get(event[i].getPersonID()).add(event[i]);
         }
 
         // Chronologically order for events
-        for (String key : tempEvent.keySet()) {
+        for (String key : listMap.keySet()) {
             Set birthSet = new HashSet<>(); // birth events come first
             Set deathSet = new HashSet<>(); // death events come last (obviously)
             ArrayList<Event> eventList = new ArrayList<Event>();
 
             // Adding events in chronological order based on events
-            for(int i = 0; i < tempEvent.get(key).size(); i++) {
-                Event currEvent = tempEvent.get(key).get(i);
+            for(int i = 0; i < listMap.get(key).size(); i++) {
+                Event currEvent = listMap.get(key).get(i);
 
                 if(currEvent.getEventType().toLowerCase().equals("birth")) {
                     birthSet.add(currEvent);
@@ -380,7 +378,7 @@ public class DataCache {
                 }
             }
 
-            ArrayList<Event> orderedList = new ArrayList<Event>();
+            ArrayList<Event> orderedList = new ArrayList<Event>(); // will store ordered list for events
 
             orderedList.addAll(birthSet);
             orderedList.addAll(eventList);
@@ -462,7 +460,6 @@ public class DataCache {
 
             setMotherSide(mother);
         }
-
     }
 
     /**
@@ -493,7 +490,7 @@ public class DataCache {
      * This function is in charge of populating the map based on the settings given for the events
      * Based on the gender filter for the family given according to specs
      */
-    public void isCurrentEventOn() {
+    public void isCurrentSettingOn() {
         // Clear events before putting them back
         currentPersonEvents.clear();
 
@@ -661,6 +658,8 @@ public class DataCache {
         isFemaleEventsOn = femaleEventsOn;
     }
 
+    /********* Clearing everything in order to log user out *********/
+
     public void logout() {
 
         // Instance, user and token become null
@@ -700,7 +699,8 @@ public class DataCache {
         maternalAncestorsFemales.clear();
     }
 
-    // Testing methods for reloading map after finishing an activity
+    /********* Random functions added to fix some bugs across app *********/
+
     public Marker getMarker() {
         return marker;
     }

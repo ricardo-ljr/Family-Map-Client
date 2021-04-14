@@ -107,4 +107,10 @@ public class ModelTest {
 
     /********************************************** CALCULATE FAMILY RELATIONSHIPS **********************************************/
 
+
+    @Test
+    public void familyRelationships() {
+
+    }
+
 }
