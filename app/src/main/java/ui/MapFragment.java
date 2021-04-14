@@ -60,8 +60,23 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private String selectedPerson = new String();
     private boolean drawLines = false;
 
+    public void setPersonToDraw(Person personToDraw) {
+        this.personToDraw = personToDraw;
+    }
+
+    private Person personToDraw = null;
+
+
+    public Person getPersonToDraw() {
+        return personToDraw;
+    }
+
+
     private ArrayList<Polyline> polylines = new ArrayList<Polyline>();
     private ArrayList<Marker> markers = new ArrayList<>();
+
+    public MapFragment() {
+    }
 
     public String getSelectedPerson() {
         return selectedPerson;
@@ -269,6 +284,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         textDescription1.setText(eventDescription);
         textDescription2.setText(timePlace);
 
+        setPersonToDraw(person);
         drawPolyLines(marker.getPosition(), person);
     }
 
@@ -377,6 +393,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             if(map != null) { // create a click event on marker
                 onMapReady(map);
                 reDrawMapOnReload();
+                reDrawPolyLines();
             }
         }
     }
@@ -429,15 +446,18 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 // if marker is set to true, than draw polylines as well
             }
         }
-
-        for (Marker m: markers) {
-            if (m.getTag() == data.getMarker()) {
-                clickMarker(m);
-            }
-        }
-
-
-        // match marker tag with clicked event in order to preserve polylines
-
     }
+
+    private void reDrawPolyLines() {
+        DataCache data = DataCache.getInstance();
+
+        for (Polyline line : polylines) {
+            line.remove();
+        }
+        polylines.clear();
+
+        drawPolyLines(data.getMarker().getPosition(), getPersonToDraw());
+    }
+
+
 }
